@@ -14,6 +14,8 @@ const SignUpPage = () => (
 
 const INITIAL_STATE = {
   username: '',
+  firstname: '',
+  lastname: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -28,7 +30,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, firstname, lastname } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -37,6 +39,8 @@ class SignUpFormBase extends Component {
         return this.props.firebase.user(authUser.user.uid).set(
           {
             username,
+            firstname,
+            lastname,
             email
           },
           { merge: true }
@@ -58,13 +62,23 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const {
+      username,
+      email,
+      passwordOne,
+      passwordTwo,
+      firstname,
+      lastname,
+      error
+    } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      username === '' ||
+      firstname === '' ||
+      lastname === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -73,7 +87,21 @@ class SignUpFormBase extends Component {
           value={username}
           onChange={this.onChange}
           type='text'
-          placeholder='Full Name'
+          placeholder='Username'
+        />
+        <input
+          name='firstname'
+          value={firstname}
+          onChange={this.onChange}
+          type='text'
+          placeholder='First Name'
+        />
+        <input
+          name='lastname'
+          value={lastname}
+          onChange={this.onChange}
+          type='text'
+          placeholder='Last Name'
         />
         <input
           name='email'
