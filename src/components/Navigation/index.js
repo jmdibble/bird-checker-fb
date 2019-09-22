@@ -6,28 +6,25 @@ import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
 const Navigation = ({ authUser }) => (
-  <div>    <AuthUserContext.Consumer>
-    {authUser =>
-      authUser ? <NavigationAuth /> : <NavigationNonAuth />
-    }
-  </AuthUserContext.Consumer></div>
+  <div>
+    {' '}
+    <AuthUserContext.Consumer>
+      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+    </AuthUserContext.Consumer>
+  </div>
 );
 
 const NavigationAuth = () => (
-
   <div>
-
     <Link to={ROUTES.HOME}> Home |</Link>
 
     <Link to={ROUTES.LANDING}> Landing |</Link>
 
     <Link to={ROUTES.ACCOUNT}> Account |</Link>
 
-    <Link to={ROUTES.ADMIN}> Admin |</Link>
-
+    {/* <Link to={ROUTES.ADMIN}> Admin |</Link> */}
 
     <SignOutButton />
-
   </div>
 );
 
