@@ -1,47 +1,57 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Splash from '../../images/splash1.jpg';
+import Splash from '../../images/splash2.png';
 import * as ROUTES from '../../constants/routes';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
-  splash: {
+  heroImage: {
+    backgroundImage: `url(${Splash})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     position: 'relative',
-    maxWidth: '100%'
+    height: '700px',
+    textAlign: 'center'
   },
-  buttons: {
-    margin: '10px auto 10px auto'
+  heroText: {
+    textAlign: 'center',
+    color: '#edf5e1',
+    padding: '150px 0px 50px 0px'
   },
   button: {
-    margin: '10px auto 10px auto'
+    margin: '5px'
   }
 };
 
 const Landing = ({ classes }) => (
   <Fragment>
-    <div>
-      <img src={Splash} className={classes.splash} />
-      <div className={classes.buttons}>
-        <Button
-          className={classes.button}
-          color='primary'
-          component={Link}
-          to={ROUTES.SIGN_UP}
-        >
-          Signup
-        </Button>
-        <Button
-          className={classes.button}
-          color='primary'
-          component={Link}
-          to={ROUTES.SIGN_IN}
-        >
-          Login
-        </Button>
+    <div className={classes.heroImage}>
+      <div className={classes.heroText}>
+        <Typography variant='h2'>Britain's #1</Typography>
+        <Typography variant='h2'>Digital Bird Book</Typography>
       </div>
+      <Button
+        className={classes.button}
+        variant='contained'
+        color='secondary'
+        component={Link}
+        to={ROUTES.SIGN_UP}
+      >
+        Sign up
+      </Button>
+      <Button
+        className={classes.button}
+        color='#05386b'
+        component={Link}
+        to={ROUTES.SIGN_IN}
+      >
+        Log in
+      </Button>
     </div>
     <h1>LANDING</h1>
   </Fragment>
