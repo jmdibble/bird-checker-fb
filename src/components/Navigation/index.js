@@ -30,7 +30,7 @@ const styles = {
     flexGrow: 1,
     backgroundColor: '#ffffff40',
     borderRadius: '5px',
-    padding: '3px'
+    padding: '3px 5px 3px 15px'
   }
 };
 
@@ -38,7 +38,9 @@ const Navigation = ({ authUser, classes, firebase }) => (
   <div>
     <AppBar position='fixed'>
       <Toolbar>
-        <img src={Logo} className={classes.logo} />
+        <Link to='/'>
+          <img src={Logo} className={classes.logo} />
+        </Link>
         <Typography className={classes.spacer}></Typography>
         <InputBase className={classes.search} placeholder='Search…' />
         <Typography className={classes.spacer}></Typography>
