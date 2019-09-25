@@ -18,6 +18,7 @@ import { Grid } from '@material-ui/core';
 
 const styles = {
   card: {
+    padding: '10px',
     margin: '50px auto 50px auto',
     maxWidth: '400px',
     textAlign: 'center'
@@ -80,7 +81,7 @@ class SignInFormBase extends Component {
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
             <Grid>
-              <Typography variant='h5'>Log in</Typography>
+              <Typography variant='h4'>Log in</Typography>
             </Grid>
             <Grid>
               <TextField className={classes.textField} label='Email' />
