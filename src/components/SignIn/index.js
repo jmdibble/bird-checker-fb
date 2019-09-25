@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { SignUpLink } from '../SignUp';
@@ -24,10 +24,11 @@ const styles = {
     textAlign: 'center'
   },
   textField: {
-    marginTop: '20px'
+    margin: '5px auto 20px auto',
+    width: '75%'
   },
   button: {
-    marginTop: '40px'
+    margin: '20px auto 40px auto'
   }
 };
 
@@ -35,7 +36,7 @@ const SignInPage = () => (
   <Fragment>
     <h1>Sign In</h1>
     <SignInForm />
-    <PasswordForgetLink />
+    {/* <PasswordForgetLink /> */}
     <SignUpLink />
   </Fragment>
 );
@@ -83,45 +84,59 @@ class SignInFormBase extends Component {
             <Grid>
               <Typography variant='h4'>Log in</Typography>
             </Grid>
+            <form onSubmit={this.onSubmit}>
+              <Grid>
+                <TextField
+                  className={classes.textField}
+                  name='email'
+                  label='Email'
+                  value={email}
+                  type='text'
+                  onChange={this.onChange}
+                  required='true'
+                />
+              </Grid>
+              <Grid>
+                <TextField
+                  className={classes.textField}
+                  name='password'
+                  label='Password'
+                  value={password}
+                  type='password'
+                  onChange={this.onChange}
+                  required='true'
+                />
+              </Grid>
+              <Grid>
+                <Typography
+                  variant='p'
+                  component={Link}
+                  to={ROUTES.PASSWORD_FORGET}
+                >
+                  Forgotten password?
+                </Typography>
+              </Grid>
+              <Grid>
+                <Button
+                  className={classes.button}
+                  disabled={isInvalid}
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                >
+                  Log in
+                </Button>
+              </Grid>
+            </form>
+            {error && <p>{error.message}</p>}
             <Grid>
-              <TextField className={classes.textField} label='Email' />
-            </Grid>
-            <Grid>
-              <TextField className={classes.textField} label='Password' />
-            </Grid>
-            <Grid>
-              <Button
-                className={classes.button}
-                variant='contained'
-                color='secondary'
-              >
-                Log in
-              </Button>
+              <Typography variant='p'>Not a member? </Typography>
+              <Typography variant='p' component={Link} to={ROUTES.SIGN_UP}>
+                Sign up now
+              </Typography>
             </Grid>
           </CardContent>
         </Card>
-
-        <form onSubmit={this.onSubmit}>
-          <input
-            name='email'
-            value={email}
-            onChange={this.onChange}
-            type='text'
-            placeholder='Email Address'
-          />
-          <input
-            name='password'
-            value={password}
-            onChange={this.onChange}
-            type='password'
-            placeholder='Password'
-          />
-          <button disabled={isInvalid} type='submit'>
-            Sign In
-          </button>
-
-          {error && <p>{error.message}</p>}
-        </form>
       </Fragment>
     );
   }
