@@ -29,15 +29,18 @@ const styles = {
   },
   button: {
     margin: '20px auto 40px auto'
+  },
+  linkText: {
+    textDecoration: 'none',
+    color: '#a8a8a8'
   }
 };
 
 const SignInPage = () => (
   <Fragment>
-    <h1>Sign In</h1>
     <SignInForm />
     {/* <PasswordForgetLink /> */}
-    <SignUpLink />
+    {/* <SignUpLink /> */}
   </Fragment>
 );
 
@@ -109,9 +112,10 @@ class SignInFormBase extends Component {
               </Grid>
               <Grid>
                 <Typography
-                  variant='p'
+                  variant='body2'
                   component={Link}
                   to={ROUTES.PASSWORD_FORGET}
+                  className={classes.linkText}
                 >
                   Forgotten password?
                 </Typography>
@@ -119,10 +123,9 @@ class SignInFormBase extends Component {
               <Grid>
                 <Button
                   className={classes.button}
-                  disabled={isInvalid}
                   type='submit'
                   variant='contained'
-                  color='secondary'
+                  color='primary'
                 >
                   Log in
                 </Button>
@@ -130,9 +133,13 @@ class SignInFormBase extends Component {
             </form>
             {error && <p>{error.message}</p>}
             <Grid>
-              <Typography variant='p'>Not a member? </Typography>
-              <Typography variant='p' component={Link} to={ROUTES.SIGN_UP}>
-                Sign up now
+              <Typography
+                className={classes.linkText}
+                variant='body2'
+                component={Link}
+                to={ROUTES.SIGN_UP}
+              >
+                Not a member? Sign up
               </Typography>
             </Grid>
           </CardContent>

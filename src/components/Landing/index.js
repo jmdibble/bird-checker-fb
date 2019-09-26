@@ -21,7 +21,7 @@ const styles = {
   heroText: {
     textAlign: 'center',
     color: '#edf5e1',
-    padding: '150px 0px 50px 0px'
+    padding: '100px 0px 50px 0px'
   },
   button: {
     margin: '5px'

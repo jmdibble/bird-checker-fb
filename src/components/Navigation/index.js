@@ -36,7 +36,7 @@ const styles = {
 
 const Navigation = ({ authUser, classes, firebase }) => (
   <div>
-    <AppBar position='fixed'>
+    <AppBar position='static'>
       <Toolbar>
         <Link to='/'>
           <img src={Logo} className={classes.logo} />
