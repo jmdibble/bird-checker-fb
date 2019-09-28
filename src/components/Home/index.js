@@ -1,34 +1,73 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
+import * as ROUTES from '../../constants/routes';
 
-class HomePage extends Component {
-  state = {
-    loading: false,
-    birdsGlobal: [],
-    birdsChecked: [],
-    users: []
-  };
+class UserList extends Component {
+  constructor(props) {
+    super(props);
 
-  // componentDidMount() {
-  //   users.get().then(querySnapshot => {
-  //     const data = querySnapshot.docs.map(doc => doc.data());
-  //     console.log(data);
-  //     this.setState({ users: data });
-  //   });
-  // }
+    this.state = {
+      loading: false,
+      users: []
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ loading: true });
+
+    this.unsubscribe = this.props.firebase.users().onSnapshot(snapshot => {
+      let users = [];
+
+      snapshot.forEach(doc => users.push({ ...doc.data(), uid: doc.id }));
+
+      this.setState({
+        users,
+        loading: false
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
+    const { users, loading } = this.state;
+
     return (
       <div>
-        <h1>Home page</h1>
-        <p>Username: </p>
+        <h2>Users</h2>
+        {loading && <div>Loading ...</div>}
+        <ul>
+          {users.map(user => (
+            <li key={user.uid}>
+              <span>
+                <strong>ID:</strong> {user.uid}
+              </span>
+              <span>
+                <strong>E-Mail:</strong> {user.email}
+              </span>
+              <span>
+                <strong>Username:</strong> {user.username}
+              </span>
+              <span>
+                <Link
+                  to={{
+                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                    state: { user }
+                  }}
+                >
+                  Details
+                </Link>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
 }
 
-const condition = authUser => !!authUser;
-
-export default withAuthorization(condition)(HomePage);
+export default withFirebase(UserList);
