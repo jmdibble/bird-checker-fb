@@ -39,6 +39,10 @@ class Firebase {
   user = uid => this.db.doc(`users/${uid}`);
 
   users = () => this.db.collection('users');
+
+  // BIRDS API
+
+  birds = () => this.db.collection('birds');
 }
 
 export default Firebase;
