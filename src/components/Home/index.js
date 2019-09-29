@@ -1,101 +1,69 @@
-import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
-import * as ROUTES from '../../constants/routes';
-import { compose } from 'recompose';
 
-// MUI stuff
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-
-const styles = {
-  progress: {
-    margin: '10px'
-  },
-  card: {
-    margin: '30px auto 30px auto',
-    maxWidth: '90%'
-  }
-};
-
-class UserList extends Component {
+class UserItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: false,
-      users: [],
-      user: []
+      user: null,
+      ...props.location.state
     };
   }
 
   componentDidMount() {
+    if (this.state.user) {
+      return;
+    }
+
     this.setState({ loading: true });
 
-    this.unsubscribe = this.props.firebase.users().onSnapshot(snapshot => {
-      let users = [];
-      let user = [];
-
-      // snapshot.forEach(doc => users.push({ ...doc.data(), uid: doc.id }));
-      snapshot.forEach(doc => users.push({ ...doc.data(), uid: doc.id }));
-
-      this.setState({
-        users,
-        loading: false
+    this.unsubscribe = this.props.firebase
+      .user(this.props.match.params.id)
+      .onSnapshot(snapshot => {
+        this.setState({
+          user: snapshot.data(),
+          loading: false
+        });
+        console.log(this.state.user);
       });
-    });
   }
 
   componentWillUnmount() {
-    this.unsubscribe();
+    this.unsubscribe && this.unsubscribe();
   }
 
   render() {
-    const { classes } = this.props;
-    const { users, loading } = this.state;
+    const { user, loading } = this.state;
 
     return (
-      <Fragment>
-        <Card className={classes.card}>
-          <CardContent>
-            <h2>User</h2>
-            {/* <strong>Username:</strong> {users.uid.username} */}
-            <h2>User List</h2>
-            {loading && (
-              <div>
-                <CircularProgress className={classes.progress} />
-              </div>
-            )}
-            <ul>
-              {users.map(user => (
-                <li key={user.uid}>
-                  <span>
-                    <strong>ID:</strong> {user.uid}
-                  </span>
-                  <span>
-                    <strong>E-Mail:</strong> {user.email}
-                  </span>
-                  <span>
-                    <strong>Username:</strong> {user.username}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </Fragment>
+      <div>
+        <h2>User ({this.props.match.params.id})</h2>
+        {loading && <div>Loading ...</div>}
+
+        {user && (
+          <div>
+            <span>
+              <strong>ID:</strong> {user.uid}
+            </span>
+            <span>
+              <strong>E-Mail:</strong> {user.email}
+            </span>
+            <span>
+              <strong>Username:</strong> {user.username}
+            </span>
+            <span>
+              <button type='button' onClick={this.onSendPasswordResetEmail}>
+                Send Password Reset
+              </button>
+            </span>
+          </div>
+        )}
+      </div>
     );
   }
 }
 
-const condition = authUser => !!authUser;
-
-export default compose(
-  withAuthorization(condition),
-  withFirebase,
-  withStyles(styles)
-)(UserList);
+export default withFirebase(UserItem);
