@@ -1,69 +1,68 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
+import withAuthorization from '../Session/withAuthorization';
+import * as ROUTES from '../../constants/routes';
+import { AuthUserContext } from '../Session';
 
-class UserItem extends Component {
-  constructor(props) {
-    super(props);
+const WrappedHomePage = ({ firebase }) => {
+  return (
+    <AuthUserContext.Consumer>
+      {authUser => <HomePage authUser={authUser} firebase={firebase} />}
+    </AuthUserContext.Consumer>
+  );
+};
 
-    this.state = {
-      loading: false,
-      user: null,
-      ...props.location.state
-    };
-  }
+class HomePage extends Component {
+  state = {
+    loading: false,
+    birds: []
+  };
 
   componentDidMount() {
-    if (this.state.user) {
-      return;
-    }
-
-    this.setState({ loading: true });
-
     this.unsubscribe = this.props.firebase
-      .user(this.props.match.params.id)
+      .user(this.props.authUser.uid)
       .onSnapshot(snapshot => {
-        this.setState({
-          user: snapshot.data(),
-          loading: false
-        });
-        console.log(this.state.user);
+        console.log(snapshot.data().birds);
+        this.setState({ birds: snapshot.data().birds });
+        console.log(this.state);
       });
+
+    console.log(this.props.authUser.uid);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.birds !== prevState.birds) {
+      this.state.birds.forEach(bird => {
+        this.unsubscribe = this.props.firebase
+          .bird(bird)
+          .onSnapshot(snapshot => {
+            console.log(snapshot.data().name);
+          });
+      });
+    }
   }
 
   componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe();
+    this.unsubscribe();
   }
 
   render() {
-    const { user, loading } = this.state;
+    const { users, loading } = this.state;
 
     return (
       <div>
-        <h2>User ({this.props.match.params.id})</h2>
-        {loading && <div>Loading ...</div>}
-
-        {user && (
-          <div>
-            <span>
-              <strong>ID:</strong> {user.uid}
-            </span>
-            <span>
-              <strong>E-Mail:</strong> {user.email}
-            </span>
-            <span>
-              <strong>Username:</strong> {user.username}
-            </span>
-            <span>
-              <button type='button' onClick={this.onSendPasswordResetEmail}>
-                Send Password Reset
-              </button>
-            </span>
-          </div>
-        )}
+        <h2>Users</h2>
       </div>
     );
   }
 }
 
-export default withFirebase(UserItem);
+const condition = authUser => !!authUser;
+
+export default compose(
+  withAuthorization(condition),
+  withFirebase
+)(WrappedHomePage);
