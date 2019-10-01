@@ -54,7 +54,11 @@ const Navigation = ({ authUser, classes, firebase }) => (
                 <Button color='inherit' onClick={firebase.doSignOut}>
                   Logout
                 </Button>
-                <IconButton color='inherit' component={Link} to={ROUTES.ADMIN}>
+                <IconButton
+                  color='inherit'
+                  component={Link}
+                  to={ROUTES.ACCOUNT}
+                >
                   <AccountCircle />
                 </IconButton>
               </Fragment>

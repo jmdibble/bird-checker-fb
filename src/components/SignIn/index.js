@@ -39,8 +39,6 @@ const styles = {
 const SignInPage = () => (
   <Fragment>
     <SignInForm />
-    {/* <PasswordForgetLink /> */}
-    {/* <SignUpLink /> */}
   </Fragment>
 );
 

@@ -27,7 +27,7 @@ class HomePage extends Component {
       .onSnapshot(snapshot => {
         console.log(snapshot.data().birds);
         this.setState({ birds: snapshot.data().birds });
-        console.log(this.state);
+        // console.log(this.state);
       });
 
     console.log(this.props.authUser.uid);
@@ -54,7 +54,7 @@ class HomePage extends Component {
 
     return (
       <div>
-        <h2>Users</h2>
+        <h2>Render main list of birds here</h2>
       </div>
     );
   }
