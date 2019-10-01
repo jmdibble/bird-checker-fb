@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 

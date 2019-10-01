@@ -45,6 +45,7 @@ const PasswordForgetPage = () => (
 
 const INITIAL_STATE = {
   email: '',
+  message: '',
   error: null
 };
 
@@ -59,6 +60,9 @@ class PasswordForgetFormBase extends Component {
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
+      .then(() => {
+        this.setState({ message: 'Email sent!' });
+      })
       .catch(error => {
         this.setState({ error });
       });
@@ -71,7 +75,7 @@ class PasswordForgetFormBase extends Component {
   };
 
   render() {
-    const { email, error } = this.state;
+    const { email, message, error } = this.state;
 
     const { classes } = this.props;
 
@@ -96,35 +100,33 @@ class PasswordForgetFormBase extends Component {
                   required='true'
                 />
               </Grid>
+              <Typography variant='body2' className={classes.linkText}>
+                {error && <p>{error.message}</p>}
+                {message && <p>{this.state.message}</p>}
+              </Typography>
+              <Grid>
+                <Button
+                  className={classes.button}
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                >
+                  Send reset email
+                </Button>
+              </Grid>
             </form>
-            {error && <p>{error.message}</p>}
             <Grid>
-              <Button
-                className={classes.button}
-                type='submit'
-                variant='contained'
-                color='primary'
+              <Typography
+                variant='body2'
+                component={Link}
+                to={ROUTES.SIGN_IN}
+                className={classes.linkText}
               >
-                Send reset email
-              </Button>
+                Sign back in
+              </Typography>
             </Grid>
           </CardContent>
         </Card>
-
-        {/* <form onSubmit={this.onSubmit}>
-          <input
-            name='email'
-            value={this.state.email}
-            onChange={this.onChange}
-            type='text'
-            placeholder='Email Address'
-          />
-          <button disabled={isInvalid} type='submit'>
-            Reset My Password
-          </button>
-
-          {error && <p>{error.message}</p>}
-        </form> */}
       </Fragment>
     );
   }

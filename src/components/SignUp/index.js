@@ -1,13 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+// MUI stuff
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
+
+const styles = {
+  card: {
+    padding: '10px',
+    margin: '50px auto 50px auto',
+    maxWidth: '600px',
+    textAlign: 'center'
+  },
+  // textField: {
+  //   margin: 'auto 5px auto 5px'
+  // },
+  textFieldFull: {
+    margin: '5px 10px 20px 10px',
+    width: '84%'
+  },
+  textFieldSplit: {
+    margin: '5px 10px 20px 10px',
+    width: '40%'
+  },
+  button: {
+    margin: '20px auto 40px auto'
+  },
+  typographyHeader: {
+    margin: 'auto auto 20px auto'
+  },
+  linkText: {
+    textDecoration: 'none',
+    color: '#a8a8a8'
+  }
+};
+
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Sign up</h1>
     <SignUpForm />
   </div>
 );
@@ -19,18 +58,22 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  birds: [],
   error: null
 };
 
 class SignUpFormBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
+  state = { ...INITIAL_STATE };
 
   onSubmit = event => {
-    const { username, email, passwordOne, firstname, lastname } = this.state;
+    const {
+      username,
+      email,
+      passwordOne,
+      firstname,
+      lastname,
+      birds
+    } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -41,7 +84,8 @@ class SignUpFormBase extends Component {
             username,
             firstname,
             lastname,
-            email
+            email,
+            birds
           },
           { merge: true }
         );
@@ -72,6 +116,8 @@ class SignUpFormBase extends Component {
       error
     } = this.state;
 
+    const { classes } = this.props;
+
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
@@ -81,55 +127,98 @@ class SignUpFormBase extends Component {
       lastname === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name='username'
-          value={username}
-          onChange={this.onChange}
-          type='text'
-          placeholder='Username'
-        />
-        <input
-          name='firstname'
-          value={firstname}
-          onChange={this.onChange}
-          type='text'
-          placeholder='First Name'
-        />
-        <input
-          name='lastname'
-          value={lastname}
-          onChange={this.onChange}
-          type='text'
-          placeholder='Last Name'
-        />
-        <input
-          name='email'
-          value={email}
-          onChange={this.onChange}
-          type='text'
-          placeholder='Email Address'
-        />
-        <input
-          name='passwordOne'
-          value={passwordOne}
-          onChange={this.onChange}
-          type='password'
-          placeholder='Password'
-        />
-        <input
-          name='passwordTwo'
-          value={passwordTwo}
-          onChange={this.onChange}
-          type='password'
-          placeholder='Confirm Password'
-        />
-        <button disabled={isInvalid} type='submit'>
-          Sign Up
-        </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
+      <Fragment>
+        <Card className={classes.card}>
+          <CardContent className={classes.cardContent}>
+            <Grid>
+              <Typography variant='h4'>Sign up for an account</Typography>
+            </Grid>
+            <form onSubmit={this.onSubmit}>
+              <Grid>
+                <TextField
+                  className={classes.textFieldFull}
+                  name='email'
+                  label='Email'
+                  value={email}
+                  type='text'
+                  onChange={this.onChange}
+                  required='true'
+                />
+              </Grid>
+              <Grid>
+                <TextField
+                  className={classes.textFieldFull}
+                  name='username'
+                  label='Choose a username'
+                  value={username}
+                  type='text'
+                  onChange={this.onChange}
+                  required='true'
+                />
+              </Grid>
+              <TextField
+                className={classes.textFieldSplit}
+                name='firstname'
+                label='Firstname'
+                value={firstname}
+                type='text'
+                onChange={this.onChange}
+                required='true'
+              />
+              <TextField
+                className={classes.textFieldSplit}
+                name='lastname'
+                label='Lastname'
+                value={lastname}
+                type='text'
+                onChange={this.onChange}
+                required='true'
+              />
+              <Grid>
+                <TextField
+                  className={classes.textFieldSplit}
+                  name='passwordOne'
+                  label='Password'
+                  value={passwordOne}
+                  type='password'
+                  onChange={this.onChange}
+                  required='true'
+                />
+                <TextField
+                  className={classes.textFieldSplit}
+                  name='passwordTwo'
+                  label='Confirm password'
+                  value={passwordTwo}
+                  type='password'
+                  onChange={this.onChange}
+                  required='true'
+                />
+              </Grid>
+              <Grid>
+                <Button
+                  className={classes.button}
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                >
+                  Sign up
+                </Button>
+              </Grid>
+            </form>
+            {error && <p>{error.message}</p>}
+            <Grid>
+              <Typography
+                className={classes.linkText}
+                variant='body2'
+                component={Link}
+                to={ROUTES.SIGN_UP}
+              >
+                Not a member? Sign up
+              </Typography>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Fragment>
     );
   }
 }
@@ -142,7 +231,8 @@ const SignUpLink = () => (
 
 const SignUpForm = compose(
   withRouter,
-  withFirebase
+  withFirebase,
+  withStyles(styles)
 )(SignUpFormBase);
 
 export default SignUpPage;
