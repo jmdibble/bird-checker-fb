@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Splash from '../../images/splash2.png';
+import Splash from '../../images/splash3.jpg';
 import * as ROUTES from '../../constants/routes';
 
 // MUI stuff
@@ -53,7 +53,7 @@ const Landing = ({ classes }) => (
         Log in
       </Button>
     </div>
-    <h1>LANDING</h1>
+    <h1>Write some shit here</h1>
   </Fragment>
 );
 

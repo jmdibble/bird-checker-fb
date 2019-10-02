@@ -64,10 +64,10 @@ const Navigation = ({ authUser, classes, firebase }) => (
               </Fragment>
             ) : (
               <Fragment>
-                <Button color='secondary' component={Link} to={ROUTES.SIGN_UP}>
+                <Button color='inherit' component={Link} to={ROUTES.SIGN_UP}>
                   Sign up
                 </Button>
-                <Button color='secondary' component={Link} to={ROUTES.SIGN_IN}>
+                <Button color='inherit' component={Link} to={ROUTES.SIGN_IN}>
                   Log in
                 </Button>
               </Fragment>

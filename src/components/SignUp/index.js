@@ -18,7 +18,8 @@ const styles = {
   card: {
     padding: '10px',
     margin: '50px auto 50px auto',
-    maxWidth: '600px',
+    width: '80%',
+    maxWidth: '1200px',
     textAlign: 'center'
   },
   // textField: {
@@ -46,7 +47,6 @@ const styles = {
 
 const SignUpPage = () => (
   <div>
-    <h1>Sign up</h1>
     <SignUpForm />
   </div>
 );
@@ -211,9 +211,9 @@ class SignUpFormBase extends Component {
                 className={classes.linkText}
                 variant='body2'
                 component={Link}
-                to={ROUTES.SIGN_UP}
+                to={ROUTES.SIGN_IN}
               >
-                Not a member? Sign up
+                Got an account? Log in
               </Typography>
             </Grid>
           </CardContent>
