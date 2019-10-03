@@ -16,12 +16,17 @@ const styles = {
     backgroundRepeat: 'no-repeat',
     position: 'relative',
     height: '700px',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0px 0px 50px 0px'
   },
   heroText: {
     textAlign: 'center',
     color: '#edf5e1',
     padding: '100px 0px 50px 0px'
+  },
+  bodyText: {
+    textAlign: 'center',
+    padding: '10px 0px 50px 0px'
   },
   button: {
     margin: '5px'
@@ -53,7 +58,17 @@ const Landing = ({ classes }) => (
         Log in
       </Button>
     </div>
-    <h1>Write some shit here</h1>
+    <Typography variant='body1' className={classes.bodyText}>
+      This began as a project to keep track of all the birds I've seen as I
+      couldn't find a suitable digital solution. I soon realised others would
+      benefit from it so I added the ability to create users and made it public.
+    </Typography>
+    <Typography variant='body1' className={classes.bodyText}>
+      The aim is to build this out into a comprehensive UK bird reference guide
+      and increase the social aspect and eventually create a central community
+      for birdwatchers. I will create a feedback section at some point to find
+      out the most requested features.
+    </Typography>
   </Fragment>
 );
 
