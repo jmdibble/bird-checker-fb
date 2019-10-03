@@ -26,7 +26,10 @@ const styles = {
   heroText: {
     textAlign: 'center',
     color: '#edf5e1',
-    padding: '100px 0px 50px 0px'
+    padding: '60px 0px 50px 0px'
+  },
+  subtitle: {
+    margin: '30px auto auto auto'
   },
   bodyText: {
     textAlign: 'center',
@@ -52,8 +55,12 @@ const Landing = ({ classes }) => (
   <Fragment>
     <div className={classes.heroImage}>
       <div className={classes.heroText}>
-        <Typography variant='h2'>Britain's #1</Typography>
-        <Typography variant='h2'>Digital Bird Book</Typography>
+        <Typography variant='h3'>Britain's #1</Typography>
+        <Typography variant='h3'>Digital Bird Book</Typography>
+        <Typography variant='subtitle1' className={classes.subtitle}>
+          Birdbook is the only digital solution to keep track of the birds
+          you've seen.
+        </Typography>
       </div>
       <Button
         className={classes.button}
@@ -92,7 +99,7 @@ const Landing = ({ classes }) => (
         <Card className={classes.card}>
           <CardContent>
             <Typography variant='h6'>Feature 1</Typography>
-            <Typography variant='body2'>
+            <Typography variant='body1'>
               Keep a checklist of all the UK birds you've seen
             </Typography>
           </CardContent>
