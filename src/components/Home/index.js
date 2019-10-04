@@ -45,12 +45,12 @@ class HomePage extends Component {
           .onSnapshot(snapshot => {
             console.log(snapshot.data().name);
             seenBirds.push(snapshot.data().name);
+            console.log(seenBirds);
+            this.setState({ seenBirds: seenBirds });
+            console.log(this.state);
           });
       });
     }
-    console.log(seenBirds);
-    // this.setState({ seenBirds: seenBirds });
-    // console.log(this.state);
   }
 
   componentWillUnmount() {
