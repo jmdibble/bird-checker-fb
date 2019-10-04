@@ -18,10 +18,12 @@ const WrappedHomePage = ({ firebase }) => {
 class HomePage extends Component {
   state = {
     loading: false,
-    birds: []
+    birds: [],
+    seenBirds: []
   };
 
   componentDidMount() {
+    // API call to set the state with all the uids of the birds the logged in user has seen
     this.unsubscribe = this.props.firebase
       .user(this.props.authUser.uid)
       .onSnapshot(snapshot => {
@@ -34,15 +36,21 @@ class HomePage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    let seenBirds = [];
+    // API call to map through each bird uid in the state and console log the name
     if (this.state.birds !== prevState.birds) {
       this.state.birds.forEach(bird => {
         this.unsubscribe = this.props.firebase
           .bird(bird)
           .onSnapshot(snapshot => {
             console.log(snapshot.data().name);
+            seenBirds.push(snapshot.data().name);
           });
       });
     }
+    console.log(seenBirds);
+    // this.setState({ seenBirds: seenBirds });
+    // console.log(this.state);
   }
 
   componentWillUnmount() {
@@ -50,11 +58,12 @@ class HomePage extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, birds } = this.state;
 
     return (
       <div>
-        <h2>Render main list of birds here</h2>
+        <h2>My birds</h2>
+        <p>{birds}</p>
       </div>
     );
   }
