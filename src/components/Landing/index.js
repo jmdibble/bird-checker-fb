@@ -99,7 +99,7 @@ const Landing = ({ classes }) => (
         <Card className={classes.card}>
           <CardContent>
             <Typography variant='h6'>Feature 1</Typography>
-            <Typography variant='body1'>
+            <Typography variant='body2'>
               Keep a checklist of all the UK birds you've seen
             </Typography>
           </CardContent>
