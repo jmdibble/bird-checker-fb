@@ -38,6 +38,7 @@ class HomePage extends Component {
   componentDidUpdate(prevProps, prevState) {
     let seenBirds = [];
     // API call to map through each bird uid in the state and console log the name
+    // then save any checked birds to state and consle log it
     if (this.state.birds !== prevState.birds) {
       this.state.birds.forEach(bird => {
         this.unsubscribe = this.props.firebase
@@ -58,12 +59,12 @@ class HomePage extends Component {
   }
 
   render() {
-    const { users, loading, birds } = this.state;
+    const { users, loading, birds, seenBirds } = this.state;
 
     return (
       <div>
         <h2>My birds</h2>
-        <p>{birds}</p>
+        <p>{seenBirds}</p>
       </div>
     );
   }
