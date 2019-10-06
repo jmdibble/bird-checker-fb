@@ -155,7 +155,7 @@ const Landing = ({ classes }) => (
               <CardContent>
                 <Typography variant='h6'>Feature 3</Typography>
                 <Typography variant='body2'>
-                  A easy-to-use and complete reference guide{' '}
+                  A easy-to-use and complete reference guide
                 </Typography>
               </CardContent>
             </Card>
@@ -163,7 +163,6 @@ const Landing = ({ classes }) => (
         </Grid>
       </Grid>
     </Grid>
-    );
     <Typography variant='h5' className={classes.bodyText}>
       Technical
     </Typography>

@@ -51,6 +51,7 @@ class HomePageContent extends Component {
   };
 
   componentDidMount() {
+    // API call to set the state with the full list of birds
     let allBirds = [];
     this.unsubscribe = this.props.firebase
       .birds()
