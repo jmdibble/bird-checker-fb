@@ -11,6 +11,10 @@ import GridList from '@material-ui/core/GridList';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import Paper from '@material-ui/core/Paper';
 
 const styles = {
   heroImage: {
@@ -48,6 +52,13 @@ const styles = {
     minWidth: '100px',
     maxWidth: '350px',
     margin: '40px auto 60px auto'
+  },
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
   }
 };
 
@@ -94,7 +105,7 @@ const Landing = ({ classes }) => (
       for birdwatchers. I will create a feedback section at some point to find
       out the most requested features.
     </Typography>
-    <Grid container='true' spacing={2} className={classes.gridContainer}>
+    {/* <Grid container='true' spacing={2} className={classes.gridContainer}>
       <Grid item md={3}>
         <Card className={classes.card}>
           <CardContent>
@@ -125,7 +136,19 @@ const Landing = ({ classes }) => (
           </CardContent>
         </Card>
       </Grid>
+    </Grid> */}
+    <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justify='center' spacing={2}>
+          {[0, 1, 2].map(value => (
+            <Grid key={value} item>
+              <Paper className={classes.paper} />
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
     </Grid>
+    );
     <Typography variant='h5' className={classes.bodyText}>
       TECHNICAL
     </Typography>
@@ -139,7 +162,7 @@ const Landing = ({ classes }) => (
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       This project is, and will remain open source and free. I want to build it
-      out to have all the features necessary and build the community.
+      out to have all the features necessary and encourage the community.
     </Typography>
   </Fragment>
 );
