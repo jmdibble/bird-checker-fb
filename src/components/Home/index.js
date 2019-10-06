@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
@@ -6,6 +6,33 @@ import { withFirebase } from '../Firebase';
 import withAuthorization from '../Session/withAuthorization';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
+
+// MUI stuff
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { Typography, Card, CardContent, Grid } from '@material-ui/core';
+
+const styles = {
+  button: {
+    margin: 10
+  },
+  gridContainer: {
+    margin: 'auto',
+    justifyContent: 'center',
+    maxWidth: '80%'
+  },
+  card: {
+    width: 350,
+    minWidth: 150,
+    minHeight: 140,
+    maxWidth: 500,
+    margin: '40px auto 60px auto'
+  },
+  root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  }
+};
 
 const WrappedHomePage = ({ firebase }) => {
   return (
@@ -15,14 +42,28 @@ const WrappedHomePage = ({ firebase }) => {
   );
 };
 
-class HomePage extends Component {
+class HomePageContent extends Component {
   state = {
     loading: false,
+    allBirds: [],
     birds: [],
     seenBirds: []
   };
 
   componentDidMount() {
+    let allBirds = [];
+    this.unsubscribe = this.props.firebase
+      .birds()
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.data().name);
+          allBirds.push(doc.data().name);
+          this.setState({ allBirds: allBirds });
+          console.log(this.state.allBirds);
+        });
+      });
+
     // API call to set the state with all the uids of the birds the logged in user has seen
     this.unsubscribe = this.props.firebase
       .user(this.props.authUser.uid)
@@ -58,19 +99,56 @@ class HomePage extends Component {
     this.unsubscribe();
   }
 
+  handleShowUserBirds() {}
+
   render() {
-    const { users, loading, birds, seenBirds } = this.state;
+    const { loading, birds, seenBirds } = this.state;
+    const { classes } = this.props;
 
     return (
-      <div>
-        <h2>My birds</h2>
-        <p>{seenBirds}</p>
-      </div>
+      <Fragment>
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.button}
+        >
+          View my birds
+        </Button>
+
+        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify='center' spacing={3}>
+              <Grid item>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant='h4'>All birds</Typography>
+                    {this.state.allBirds.map(bird => (
+                      <Typography>{bird}</Typography>
+                    ))}
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant='h4'>My birds</Typography>
+                    {this.state.seenBirds.map(seenBird => (
+                      <Typography>{seenBird}</Typography>
+                    ))}
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Fragment>
     );
   }
 }
 
 const condition = authUser => !!authUser;
+
+const HomePage = withStyles(styles)(HomePageContent);
 
 export default compose(
   withAuthorization(condition),

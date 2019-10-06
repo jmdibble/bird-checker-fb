@@ -41,7 +41,7 @@ const styles = {
     maxWidth: '700px'
   },
   button: {
-    margin: '5px'
+    margin: 5
   },
   gridContainer: {
     margin: 'auto',
