@@ -7,14 +7,14 @@ import * as ROUTES from '../../constants/routes';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import GridList from '@material-ui/core/GridList';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import Paper from '@material-ui/core/Paper';
+
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import GroupIcon from '@material-ui/icons/Group';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 const styles = {
   heroImage: {
@@ -49,16 +49,17 @@ const styles = {
     maxWidth: '80%'
   },
   card: {
-    minWidth: '100px',
-    maxWidth: '350px',
+    minWidth: 100,
+    minHeight: 140,
+    maxWidth: 200,
     margin: '40px auto 60px auto'
   },
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    textAlign: 'center'
   },
-  paper: {
-    height: 140,
-    width: 100
+  icons: {
+    margin: '20px auto auto auto'
   }
 };
 
@@ -92,7 +93,7 @@ const Landing = ({ classes }) => (
       </Button>
     </div>
     <Typography variant='h5' className={classes.bodyText}>
-      ABOUT BIRDBOOK
+      About Birdbook
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       This began as a project to keep track of all the birds I've seen as I
@@ -105,52 +106,66 @@ const Landing = ({ classes }) => (
       for birdwatchers. I will create a feedback section at some point to find
       out the most requested features.
     </Typography>
-    {/* <Grid container='true' spacing={2} className={classes.gridContainer}>
-      <Grid item md={3}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant='h6'>Feature 1</Typography>
-            <Typography variant='body2'>
-              Keep a checklist of all the UK birds you've seen
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item md={3}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant='h6'>Feature 2</Typography>
-            <Typography variant='body2'>
-              View, compare and share your list with your friends
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item md={3}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant='h6'>Feature 3</Typography>
-            <Typography variant='body2'>
-              A easy-to-use and complete reference guide{' '}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid> */}
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
-        <Grid container justify='center' spacing={2}>
-          {[0, 1, 2].map(value => (
-            <Grid key={value} item>
-              <Paper className={classes.paper} />
-            </Grid>
-          ))}
+        <Grid container justify='center' spacing={3}>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardMedia>
+                <CheckCircleIcon
+                  color='primary'
+                  fontSize='large'
+                  className={classes.icons}
+                />
+              </CardMedia>
+              <CardContent>
+                <Typography variant='h6'>Feature 1</Typography>
+                <Typography variant='body2'>
+                  Keep a checklist of all the UK birds you've seen
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardMedia>
+                <GroupIcon
+                  color='primary'
+                  fontSize='large'
+                  className={classes.icons}
+                />
+              </CardMedia>
+              <CardContent>
+                <Typography variant='h6'>Feature 2</Typography>
+                <Typography variant='body2'>
+                  View, compare and share your list with your friends
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardMedia>
+                <MenuBookIcon
+                  color='primary'
+                  fontSize='large'
+                  className={classes.icons}
+                />
+              </CardMedia>
+              <CardContent>
+                <Typography variant='h6'>Feature 3</Typography>
+                <Typography variant='body2'>
+                  A easy-to-use and complete reference guide{' '}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
     );
     <Typography variant='h5' className={classes.bodyText}>
-      TECHNICAL
+      Technical
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       The full list of birds is taken from the British Ornothologists' Union,

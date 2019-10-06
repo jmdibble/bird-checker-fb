@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import themeFile from '../../util/theme';
 
@@ -10,6 +10,7 @@ import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
+import Footer from '../Footer';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -23,7 +24,7 @@ const theme = createMuiTheme(themeFile);
 const App = () => (
   <MuiThemeProvider theme={theme}>
     <Router>
-      <div>
+      <Fragment>
         <Navigation />
 
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
@@ -33,7 +34,8 @@ const App = () => (
         <Route path={ROUTES.HOME} component={HomePage} />
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
-      </div>
+        <Footer />
+      </Fragment>
     </Router>
   </MuiThemeProvider>
 );
