@@ -10,7 +10,14 @@ import { AuthUserContext } from '../Session';
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { Typography, Card, CardContent, Grid } from '@material-ui/core';
+import {
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  Checkbox,
+  FormControlLabel
+} from '@material-ui/core';
 
 const styles = {
   button: {
@@ -60,51 +67,56 @@ class HomePageContent extends Component {
         snapshot.forEach(doc => {
           console.log(doc.data().name);
           allBirds.push(doc.data().name);
-          this.setState({ allBirds: allBirds });
-          console.log(this.state.allBirds);
         });
+        this.setState({ allBirds: allBirds });
+        console.log(this.state.allBirds);
       });
 
     // API call to set the state with all the uids of the birds the logged in user has seen
     this.unsubscribe = this.props.firebase
       .user(this.props.authUser.uid)
       .onSnapshot(snapshot => {
-        console.log(snapshot.data().birds);
+        console.log(snapshot.data());
         this.setState({ birds: snapshot.data().birds });
-        // console.log(this.state);
+        console.log(this.state);
       });
-
-    console.log(this.props.authUser.uid);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let seenBirds = [];
     // API call to map through each bird uid in the state and console log the name
-    // then save any checked birds to state and consle log it
+    // then save any checked birds to state and console log it
     if (this.state.birds !== prevState.birds) {
+      let seenBirds = [];
       this.state.birds.forEach(bird => {
+        console.log(bird);
         this.unsubscribe = this.props.firebase
-          .bird(bird)
+          .bird(bird.uid)
           .onSnapshot(snapshot => {
             console.log(snapshot.data().name);
             seenBirds.push(snapshot.data().name);
-            console.log(seenBirds);
-            this.setState({ seenBirds: seenBirds });
-            console.log(this.state);
+            this.setState({ seenBirds: seenBirds }); // revise why the setState can't move down 2 lines.
           });
       });
     }
+    // if (this.state.seenBirds !== prevState.seenBirds) {
+    //   console.log(this.state.allBirds);
+    //   this.state.birds.forEach((bird, index) => {
+    //     if (this.state.seenBirds.includes(bird.name)) {
+    //       birds[index].hasSeen = true;
+    //     }
+    //   });
+    // }
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  handleShowUserBirds() {}
-
   render() {
-    const { loading, birds, seenBirds } = this.state;
+    const { loading, birds, seenBirds, allBirds } = this.state;
     const { classes } = this.props;
+
+    console.log(seenBirds);
 
     return (
       <Fragment>
@@ -123,8 +135,17 @@ class HomePageContent extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Typography variant='h4'>All birds</Typography>
-                    {this.state.allBirds.map(bird => (
-                      <Typography>{bird}</Typography>
+                    {allBirds.map(bird => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={seenBirds.includes(bird)}
+                            // onChange={}
+                            value={bird}
+                          />
+                        }
+                        label={bird}
+                      />
                     ))}
                   </CardContent>
                 </Card>
@@ -133,7 +154,7 @@ class HomePageContent extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Typography variant='h4'>My birds</Typography>
-                    {this.state.seenBirds.map(seenBird => (
+                    {seenBirds.map(seenBird => (
                       <Typography>{seenBird}</Typography>
                     ))}
                   </CardContent>
