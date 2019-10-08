@@ -28,7 +28,7 @@ const styles = {
   },
   search: {
     flexGrow: 1,
-    backgroundColor: '#ffffff40',
+    backgroundColor: '#ffffff40', // this is 40% transparency
     borderRadius: '5px',
     padding: '3px 5px 3px 15px'
   }

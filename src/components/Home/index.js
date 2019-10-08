@@ -19,7 +19,8 @@ import {
   FormControlLabel,
   FormGroup,
   IconButton,
-  Tooltip
+  Tooltip,
+  Paper
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -43,6 +44,9 @@ const styles = {
   root: {
     flexGrow: 1,
     textAlign: 'center'
+  },
+  titleGrid: {
+    alignItems: 'center'
   }
 };
 
@@ -127,18 +131,23 @@ class HomePageContent extends Component {
       <Fragment>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
-            <Grid container justify='center' spacing={3}>
+            <Grid container justify='center' spacing={1}>
               <Grid item>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography variant='h4'>
-                      All birds{' '}
-                      <Tooltip title='Filter seen birds' placement='right'>
-                        <IconButton>
-                          <FilterListIcon fontSize='large' />
-                        </IconButton>
-                      </Tooltip>
-                    </Typography>
+                    <Grid container spacing={1} className={classes.titleGrid}>
+                      <Grid item xs={4}></Grid>
+                      <Grid item xs={4}>
+                        <Typography variant='h4'>Birds</Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Tooltip title='Filter seen birds'>
+                          <IconButton>
+                            <FilterListIcon fontSize='large' />
+                          </IconButton>
+                        </Tooltip>
+                      </Grid>
+                    </Grid>
 
                     <FormGroup>
                       {allBirds.map(bird => (
