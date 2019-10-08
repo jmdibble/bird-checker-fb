@@ -9,15 +9,20 @@ import { AuthUserContext } from '../Session';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import {
   Typography,
   Card,
   CardContent,
   Grid,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  Tooltip
 } from '@material-ui/core';
+
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = {
   button: {
@@ -120,33 +125,35 @@ class HomePageContent extends Component {
 
     return (
       <Fragment>
-        <Button
-          variant='contained'
-          color='secondary'
-          className={classes.button}
-        >
-          View my birds
-        </Button>
-
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
             <Grid container justify='center' spacing={3}>
               <Grid item>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography variant='h4'>All birds</Typography>
-                    {allBirds.map(bird => (
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={seenBirds.includes(bird)}
-                            // onChange={}
-                            value={bird}
-                          />
-                        }
-                        label={bird}
-                      />
-                    ))}
+                    <Typography variant='h4'>
+                      All birds{' '}
+                      <Tooltip title='Filter seen birds' placement='right'>
+                        <IconButton>
+                          <FilterListIcon fontSize='large' />
+                        </IconButton>
+                      </Tooltip>
+                    </Typography>
+
+                    <FormGroup>
+                      {allBirds.map(bird => (
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={seenBirds.includes(bird)}
+                              // onChange={}
+                              value={bird}
+                            />
+                          }
+                          label={bird}
+                        />
+                      ))}
+                    </FormGroup>
                   </CardContent>
                 </Card>
               </Grid>
