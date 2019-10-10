@@ -169,7 +169,7 @@ const Landing = ({ classes }) => (
     <Typography variant='body1' className={classes.bodyText}>
       The full list of birds is taken from the British Ornothologists' Union,
       categories A - C, more commonly known as the British List. You can read
-      more about it here{' '}
+      more about it here
       <a href='https://www.bou.org.uk/british-list/'>
         https://www.bou.org.uk/british-list/
       </a>
@@ -177,7 +177,7 @@ const Landing = ({ classes }) => (
     <Typography variant='body1' className={classes.bodyText}>
       This project is, and will remain open source and free. I want to build it
       out to have all the features necessary and encourage the community.
-    </Typography>{' '}
+    </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       However, it isn't free to host and maintain this application, so I
       appreciate anyone contributing to the code and/or making donations. If

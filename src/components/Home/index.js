@@ -62,8 +62,9 @@ class HomePageContent extends Component {
   state = {
     loading: false,
     allBirds: [],
-    birds: [],
-    seenBirds: []
+    seenBirdsUid: [],
+    seenBirds: [],
+    checkedValues: []
   };
 
   componentDidMount() {
@@ -86,7 +87,7 @@ class HomePageContent extends Component {
       .user(this.props.authUser.uid)
       .onSnapshot(snapshot => {
         console.log(snapshot.data());
-        this.setState({ birds: snapshot.data().birds });
+        this.setState({ seenBirdsUid: snapshot.data().birds });
         console.log(this.state);
       });
   }
@@ -94,9 +95,9 @@ class HomePageContent extends Component {
   componentDidUpdate(prevProps, prevState) {
     // API call to map through each bird uid in the state and console log the name
     // then save any checked birds to state and console log it
-    if (this.state.birds !== prevState.birds) {
+    if (this.state.seenBirdsUid !== prevState.seenBirdsUid) {
       let seenBirds = [];
-      this.state.birds.forEach(bird => {
+      this.state.seenBirdsUid.forEach(bird => {
         console.log(bird);
         this.unsubscribe = this.props.firebase
           .bird(bird.uid)
@@ -107,25 +108,30 @@ class HomePageContent extends Component {
           });
       });
     }
-    // if (this.state.seenBirds !== prevState.seenBirds) {
-    //   console.log(this.state.allBirds);
-    //   this.state.birds.forEach((bird, index) => {
-    //     if (this.state.seenBirds.includes(bird.name)) {
-    //       birds[index].hasSeen = true;
-    //     }
-    //   });
-    // }
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
+  checkboxHandler = () => {
+    console.log('Trying to check');
+    // if (checked === true) {
+    //   console.log('was checked');
+    //   // find the uid of the bird
+    //   // delete that bird from the birds object in that user document
+    //   // re-render the list with the checkbox checked=false
+    // } else {
+    //   console.log('was unchecked');
+    //   // find the uid of the bird
+    //   // add that bird to the birds object in the user document
+    //   // re-render the list with the checkbox checked=true
+    // }
+  };
+
   render() {
     const { loading, birds, seenBirds, allBirds } = this.state;
     const { classes } = this.props;
-
-    console.log(seenBirds);
 
     return (
       <Fragment>
@@ -154,7 +160,10 @@ class HomePageContent extends Component {
                         <FormControlLabel
                           control={
                             <Checkbox
-                              checked={seenBirds.includes(bird)}
+                              id='checkbox'
+                              ref='checkbox'
+                              checked={!!seenBirds.includes(bird)}
+                              onChange={() => this.checkboxHandler()}
                               // onChange={}
                               value={bird}
                             />
