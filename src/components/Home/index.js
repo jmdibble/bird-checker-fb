@@ -163,7 +163,7 @@ class HomePageContent extends Component {
                               id='checkbox'
                               ref='checkbox'
                               checked={!!seenBirds.includes(bird)}
-                              onChange={() => this.checkboxHandler()}
+                              onClick={this.checkboxHandler} // don't know if this wants to be onClick or onCheck
                               // onChange={}
                               value={bird}
                             />
