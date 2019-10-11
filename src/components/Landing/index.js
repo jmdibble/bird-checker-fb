@@ -164,7 +164,7 @@ const Landing = ({ classes }) => (
       </Grid>
     </Grid>
     <Typography variant='h5' className={classes.bodyText}>
-      Technical
+      The birds
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       The full list of birds is taken from the British Ornothologists' Union,
@@ -173,6 +173,9 @@ const Landing = ({ classes }) => (
       <a href='https://www.bou.org.uk/british-list/'>
         https://www.bou.org.uk/british-list/
       </a>
+    </Typography>
+    <Typography variant='h5' className={classes.bodyText}>
+      Technical
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       This project is, and will remain open source and free. I want to build it
