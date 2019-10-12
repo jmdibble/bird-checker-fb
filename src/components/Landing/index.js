@@ -43,6 +43,12 @@ const styles = {
   button: {
     margin: 5
   },
+  buttonWrapper: {
+    textAlign: 'center'
+  },
+  donateButton: {
+    margin: 5
+  },
   gridContainer: {
     margin: 'auto',
     justifyContent: 'center',
@@ -169,8 +175,8 @@ const Landing = ({ classes }) => (
     <Typography variant='body1' className={classes.bodyText}>
       The full list of birds is taken from the British Ornothologists' Union,
       categories A - C, more commonly known as the British List. You can read
-      more about it here
-      <a href='https://www.bou.org.uk/british-list/'>
+      more about it here{' '}
+      <a href='https://www.bou.org.uk/british-list/' target='_blank'>
         https://www.bou.org.uk/british-list/
       </a>
     </Typography>
@@ -182,11 +188,22 @@ const Landing = ({ classes }) => (
       out to have all the features necessary and encourage the community.
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
-      However, it isn't free to host and maintain this application, so I
+      However, it isn't free to build, host and maintain this application, so I
       appreciate anyone contributing to the code and/or making donations. If
-      you'd like to dontate to keep this service running as long as possible,
-      please do so here.
+      you'd like to dontate to help keep this service running as long as
+      possible, please do so here.
     </Typography>
+    <div className={classes.buttonWrapper}>
+      <Button
+        className={classes.donateButton}
+        variant='contained'
+        color='secondary'
+        href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JHNHVKG54GAVC&source=url'
+        target='_blank'
+      >
+        Donate
+      </Button>
+    </div>
   </Fragment>
 );
 
