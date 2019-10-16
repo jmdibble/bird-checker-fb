@@ -23,8 +23,6 @@ import {
   Paper
 } from '@material-ui/core';
 
-import DeleteIcon from '@material-ui/icons/Delete';
-
 const styles = {
   button: {
     margin: 10
@@ -116,24 +114,19 @@ class HomePageContent extends Component {
   }
 
   checkboxHandler = (isChecked, uid) => {
-    console.log('Trying to check');
     if (isChecked === true) {
       const newBirdArray = this.state.seenBirdsUid.filter(bird => {
         return bird.uid !== uid;
       });
-      console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
     } else {
-      console.log('was unchecked');
-      console.log(uid);
       const newBirdArray = this.state.seenBirdsUid.concat(
         this.state.allBirds.filter(bird => {
           return bird.uid === uid;
         })
       );
-      console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -191,7 +184,7 @@ class HomePageContent extends Component {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Card className={classes.card}>
                   <CardContent>
                     <Typography variant='h4'>My birds</Typography>
@@ -200,7 +193,7 @@ class HomePageContent extends Component {
                     ))}
                   </CardContent>
                 </Card>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>
