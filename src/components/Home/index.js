@@ -74,9 +74,10 @@ class HomePageContent extends Component {
       .birds()
       .get()
       .then(snapshot => {
+        console.log(snapshot);
         snapshot.forEach(doc => {
-          console.log(doc.data().name);
-          allBirds.push(doc.data().name);
+          console.log(doc.id);
+          allBirds.push({ name: doc.data().name, uid: doc.id });
         });
         this.setState({ allBirds: allBirds });
         console.log(this.state.allBirds);
@@ -114,25 +115,35 @@ class HomePageContent extends Component {
     this.unsubscribe();
   }
 
-  checkboxHandler = () => {
+  checkboxHandler = (isChecked, uid) => {
     console.log('Trying to check');
-    // if (checked === true) {
-    //   console.log('was checked');
-    //   // find the uid of the bird
-    //   // delete that bird from the birds object in that user document
-    //   // re-render the list with the checkbox checked=false
-    // } else {
-    //   console.log('was unchecked');
-    //   // find the uid of the bird
-    //   // add that bird to the birds object in the user document
-    //   // re-render the list with the checkbox checked=true
-    // }
+    if (isChecked === true) {
+      const newBirdArray = this.state.seenBirdsUid.filter(bird => {
+        return bird.uid !== uid;
+      });
+      console.log(newBirdArray);
+      this.unsubscribe = this.props.firebase
+        .user(this.props.authUser.uid)
+        .update({ birds: newBirdArray });
+    } else {
+      console.log('was unchecked');
+      console.log(uid);
+      const newBirdArray = this.state.seenBirdsUid.concat(
+        this.state.allBirds.filter(bird => {
+          return bird.uid === uid;
+        })
+      );
+      console.log(newBirdArray);
+      this.unsubscribe = this.props.firebase
+        .user(this.props.authUser.uid)
+        .update({ birds: newBirdArray });
+    }
   };
 
   render() {
     const { loading, birds, seenBirds, allBirds } = this.state;
     const { classes } = this.props;
-
+    console.log(seenBirds);
     return (
       <Fragment>
         <Grid container className={classes.root} spacing={2}>
@@ -156,21 +167,26 @@ class HomePageContent extends Component {
                     </Grid>
 
                     <FormGroup>
-                      {allBirds.map(bird => (
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              id='checkbox'
-                              ref='checkbox'
-                              checked={!!seenBirds.includes(bird)}
-                              onClick={this.checkboxHandler} // don't know if this wants to be onClick or onCheck
-                              // onChange={}
-                              value={bird}
-                            />
-                          }
-                          label={bird}
-                        />
-                      ))}
+                      {allBirds.map(bird => {
+                        let isChecked = !!seenBirds.includes(bird.name);
+                        return (
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                id='checkbox'
+                                ref='checkbox'
+                                checked={isChecked}
+                                onClick={() =>
+                                  this.checkboxHandler(isChecked, bird.uid)
+                                } // don't know if this wants to be onClick or onCheck
+                                // onChange={}
+                                value={bird.name}
+                              />
+                            }
+                            label={bird.name}
+                          />
+                        );
+                      })}
                     </FormGroup>
                   </CardContent>
                 </Card>
