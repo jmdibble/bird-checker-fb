@@ -72,22 +72,17 @@ class HomePageContent extends Component {
       .birds()
       .get()
       .then(snapshot => {
-        console.log(snapshot);
         snapshot.forEach(doc => {
-          console.log(doc.id);
           allBirds.push({ name: doc.data().name, uid: doc.id });
         });
         this.setState({ allBirds: allBirds });
-        console.log(this.state.allBirds);
       });
 
     // API call to set the state with all the uids of the birds the logged in user has seen
     this.unsubscribe = this.props.firebase
       .user(this.props.authUser.uid)
       .onSnapshot(snapshot => {
-        console.log(snapshot.data());
         this.setState({ seenBirdsUid: snapshot.data().birds });
-        console.log(this.state);
       });
   }
 
@@ -97,11 +92,9 @@ class HomePageContent extends Component {
     if (this.state.seenBirdsUid !== prevState.seenBirdsUid) {
       let seenBirds = [];
       this.state.seenBirdsUid.forEach(bird => {
-        console.log(bird);
         this.unsubscribe = this.props.firebase
           .bird(bird.uid)
           .onSnapshot(snapshot => {
-            console.log(snapshot.data().name);
             seenBirds.push(snapshot.data().name);
             this.setState({ seenBirds: seenBirds }); // revise why the setState can't move down 2 lines.
           });
