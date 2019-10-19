@@ -10,6 +10,7 @@ import { AuthUserContext } from '../Session';
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {
   Typography,
   Card,
@@ -20,7 +21,8 @@ import {
   FormGroup,
   IconButton,
   Tooltip,
-  Paper
+  Box,
+  Dialog
 } from '@material-ui/core';
 
 const styles = {
@@ -42,6 +44,9 @@ const styles = {
   root: {
     flexGrow: 1,
     textAlign: 'center'
+  },
+  itemsBox: {
+    textAlign: 'left'
   },
   titleGrid: {
     alignItems: 'center'
@@ -114,6 +119,7 @@ class HomePageContent extends Component {
         return bird.uid !== uid;
       });
       console.log(newBirdArray);
+      this.setState({ seenBirdsUid: newBirdArray });
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -124,14 +130,21 @@ class HomePageContent extends Component {
         })
       );
       console.log(newBirdArray);
+      this.setState({ seenBirdsUid: newBirdArray });
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
     }
   };
 
+  infoHandler = () => {
+    console.log('info button clicked');
+    // get the uid of the bird that was clicked
+    // open a dialog box with the name and picture of the bird
+  };
+
   render() {
-    const { loading, birds, seenBirds, allBirds } = this.state;
+    const { loading, birds, seenBirds, allBirds, infoHandler } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
     // console.log(this.state);
@@ -161,21 +174,30 @@ class HomePageContent extends Component {
                       {allBirds.map(bird => {
                         let isChecked = !!seenBirds.includes(bird.name);
                         return (
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                id='checkbox'
-                                ref='checkbox'
-                                checked={isChecked}
-                                onClick={() =>
-                                  this.checkboxHandler(isChecked, bird.uid)
-                                } // don't know if this wants to be onClick or onCheck
-                                // onChange={}
-                                value={bird.name}
+                          <Box display='flex' className={classes.itemsBox}>
+                            <Box flexGrow={1}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    id='checkbox'
+                                    ref='checkbox'
+                                    checked={isChecked}
+                                    onClick={() =>
+                                      this.checkboxHandler(isChecked, bird.uid)
+                                    } // don't know if this wants to be onClick or onCheck
+                                    // onChange={}
+                                    value={bird.name}
+                                  />
+                                }
+                                label={bird.name}
                               />
-                            }
-                            label={bird.name}
-                          />
+                            </Box>
+                            <Box>
+                              <IconButton>
+                                <InfoOutlinedIcon onClick={this.infoHandler} />
+                              </IconButton>
+                            </Box>
+                          </Box>
                         );
                       })}
                     </FormGroup>
