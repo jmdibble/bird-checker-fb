@@ -22,7 +22,9 @@ import {
   IconButton,
   Tooltip,
   Box,
-  Dialog
+  Dialog,
+  DialogTitle,
+  DialogContent
 } from '@material-ui/core';
 
 const styles = {
@@ -67,7 +69,8 @@ class HomePageContent extends Component {
     allBirds: [],
     seenBirdsUid: [],
     seenBirds: [],
-    checkedValues: []
+    checkedValues: [],
+    open: false
   };
 
   componentDidMount() {
@@ -141,10 +144,23 @@ class HomePageContent extends Component {
     console.log('info button clicked');
     // get the uid of the bird that was clicked
     // open a dialog box with the name and picture of the bird
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
-    const { loading, birds, seenBirds, allBirds, infoHandler } = this.state;
+    const {
+      loading,
+      birds,
+      seenBirds,
+      allBirds,
+      infoHandler,
+      handleClose,
+      open
+    } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
     // console.log(this.state);
@@ -217,6 +233,14 @@ class HomePageContent extends Component {
             </Grid>
           </Grid>
         </Grid>
+        <Dialog
+          open={this.state.open}
+          onBackdropClick={this.handleClose}
+          className={classes.dialog}
+        >
+          <DialogTitle>Hello CodeSandbox</DialogTitle>
+          <DialogContent>Need to add a picture and the bird name</DialogContent>
+        </Dialog>
       </Fragment>
     );
   }
