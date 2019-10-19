@@ -84,6 +84,7 @@ class HomePageContent extends Component {
       .onSnapshot(snapshot => {
         this.setState({ seenBirdsUid: snapshot.data().birds });
       });
+    console.log(this.state.seenBirdsUid);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -100,6 +101,7 @@ class HomePageContent extends Component {
           });
       });
     }
+    console.log(this.state.seenBirds);
   }
 
   componentWillUnmount() {
@@ -111,6 +113,7 @@ class HomePageContent extends Component {
       const newBirdArray = this.state.seenBirdsUid.filter(bird => {
         return bird.uid !== uid;
       });
+      console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -120,6 +123,7 @@ class HomePageContent extends Component {
           return bird.uid === uid;
         })
       );
+      console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -130,6 +134,7 @@ class HomePageContent extends Component {
     const { loading, birds, seenBirds, allBirds } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
+    // console.log(this.state);
     return (
       <Fragment>
         <Grid container className={classes.root} spacing={2}>
