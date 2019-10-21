@@ -52,6 +52,9 @@ const styles = {
   },
   titleGrid: {
     alignItems: 'center'
+  },
+  dialog: {
+    minWidth: '350px'
   }
 };
 
@@ -70,7 +73,8 @@ class HomePageContent extends Component {
     seenBirdsUid: [],
     seenBirds: [],
     checkedValues: [],
-    open: false
+    open: false,
+    dialogTitle: ''
   };
 
   componentDidMount() {
@@ -140,10 +144,11 @@ class HomePageContent extends Component {
     }
   };
 
-  infoHandler = () => {
-    console.log('info button clicked');
-    // get the uid of the bird that was clicked
-    // open a dialog box with the name and picture of the bird
+  infoHandler = birdName => {
+    console.log(birdName);
+    console.log(this.state);
+    this.setState({ dialogTitle: birdName });
+    console.log(this.state);
     this.setState({ open: true });
   };
 
@@ -159,7 +164,8 @@ class HomePageContent extends Component {
       allBirds,
       infoHandler,
       handleClose,
-      open
+      open,
+      dialogTitle
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
@@ -190,7 +196,11 @@ class HomePageContent extends Component {
                       {allBirds.map(bird => {
                         let isChecked = !!seenBirds.includes(bird.name);
                         return (
-                          <Box display='flex' className={classes.itemsBox}>
+                          <Box
+                            display='flex'
+                            className={classes.itemsBox}
+                            key={bird.name}
+                          >
                             <Box flexGrow={1}>
                               <FormControlLabel
                                 control={
@@ -210,7 +220,9 @@ class HomePageContent extends Component {
                             </Box>
                             <Box>
                               <IconButton>
-                                <InfoOutlinedIcon onClick={this.infoHandler} />
+                                <InfoOutlinedIcon
+                                  onClick={() => this.infoHandler(bird.name)}
+                                />
                               </IconButton>
                             </Box>
                           </Box>
@@ -220,26 +232,20 @@ class HomePageContent extends Component {
                   </CardContent>
                 </Card>
               </Grid>
-              {/* <Grid item>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Typography variant='h4'>My birds</Typography>
-                    {seenBirds.map(seenBird => (
-                      <Typography>{seenBird}</Typography>
-                    ))}
-                  </CardContent>
-                </Card>
-              </Grid> */}
             </Grid>
           </Grid>
         </Grid>
         <Dialog
           open={this.state.open}
           onBackdropClick={this.handleClose}
-          className={classes.dialog}
+          classes={{
+            paper: classes.dialog
+          }}
         >
-          <DialogTitle>Hello CodeSandbox</DialogTitle>
-          <DialogContent>Need to add a picture and the bird name</DialogContent>
+          <DialogTitle>{this.state.dialogTitle}</DialogTitle>
+          <DialogContent>
+            <Typography variant='body1'>Picture goes here</Typography>
+          </DialogContent>
         </Dialog>
       </Fragment>
     );
