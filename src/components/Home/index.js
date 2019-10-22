@@ -145,15 +145,16 @@ class HomePageContent extends Component {
   };
 
   infoHandler = birdName => {
-    console.log(birdName);
-    console.log(this.state);
     this.setState({ dialogTitle: birdName });
-    console.log(this.state);
     this.setState({ open: true });
   };
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  getPic = () => {
+    console.log('Get pic');
   };
 
   render() {
@@ -165,7 +166,8 @@ class HomePageContent extends Component {
       infoHandler,
       handleClose,
       open,
-      dialogTitle
+      dialogTitle,
+      getPic
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
@@ -185,7 +187,7 @@ class HomePageContent extends Component {
                       </Grid>
                       <Grid item xs={4}>
                         <Tooltip title='Filter seen birds'>
-                          <IconButton>
+                          <IconButton onClick={() => this.getPic()}>
                             <FilterListIcon fontSize='large' />
                           </IconButton>
                         </Tooltip>
@@ -219,10 +221,10 @@ class HomePageContent extends Component {
                               />
                             </Box>
                             <Box>
-                              <IconButton>
-                                <InfoOutlinedIcon
-                                  onClick={() => this.infoHandler(bird.name)}
-                                />
+                              <IconButton
+                                onClick={() => this.infoHandler(bird.name)}
+                              >
+                                <InfoOutlinedIcon />
                               </IconButton>
                             </Box>
                           </Box>
