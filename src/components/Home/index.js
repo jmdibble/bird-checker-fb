@@ -74,7 +74,8 @@ class HomePageContent extends Component {
     seenBirds: [],
     checkedValues: [],
     open: false,
-    dialogTitle: ''
+    dialogTitle: '',
+    firecrestUrl: ''
   };
 
   componentDidMount() {
@@ -82,8 +83,8 @@ class HomePageContent extends Component {
     let allBirds = [];
     this.unsubscribe = this.props.firebase
       .birds()
-      .get()
-      .then(snapshot => {
+      // .get()
+      .onSnapshot(snapshot => {
         snapshot.forEach(doc => {
           allBirds.push({ name: doc.data().name, uid: doc.id });
         });
@@ -97,6 +98,15 @@ class HomePageContent extends Component {
         this.setState({ seenBirdsUid: snapshot.data().birds });
       });
     console.log(this.state.seenBirdsUid);
+
+    this.props.firebase
+      .storageRef()
+      .child('/birds/Firecrest.jpg')
+      .getDownloadURL()
+      .then(url => {
+        console.log(url);
+        this.setState({ firecrestUrl: url });
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -126,10 +136,10 @@ class HomePageContent extends Component {
         return bird.uid !== uid;
       });
       console.log(newBirdArray);
-      this.setState({ seenBirdsUid: newBirdArray });
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
+      this.setState({ seenBirdsUid: newBirdArray });
     } else {
       const newBirdArray = this.state.seenBirdsUid.concat(
         this.state.allBirds.filter(bird => {
@@ -137,10 +147,10 @@ class HomePageContent extends Component {
         })
       );
       console.log(newBirdArray);
-      this.setState({ seenBirdsUid: newBirdArray });
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
+      this.setState({ seenBirdsUid: newBirdArray });
     }
   };
 
@@ -162,16 +172,22 @@ class HomePageContent extends Component {
       loading,
       birds,
       seenBirds,
+      seenBirdsUid,
       allBirds,
       infoHandler,
       handleClose,
       open,
       dialogTitle,
-      getPic
+      getPic,
+      firecrestUrl
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
+    console.log(seenBirdsUid);
     // console.log(this.state);
+
+    console.log(firecrestUrl);
+
     return (
       <Fragment>
         <Grid container className={classes.root} spacing={2}>
@@ -247,6 +263,7 @@ class HomePageContent extends Component {
           <DialogTitle>{this.state.dialogTitle}</DialogTitle>
           <DialogContent>
             <Typography variant='body1'>Picture goes here</Typography>
+            <img src={firecrestUrl} alt='firecrest' />
           </DialogContent>
         </Dialog>
       </Fragment>
