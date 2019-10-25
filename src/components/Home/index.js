@@ -55,6 +55,10 @@ const styles = {
   },
   dialog: {
     minWidth: '350px'
+    // maxHeight: '500px'
+  },
+  image: {
+    maxWidth: '350px'
   }
 };
 
@@ -75,7 +79,7 @@ class HomePageContent extends Component {
     checkedValues: [],
     open: false,
     dialogTitle: '',
-    firecrestUrl: ''
+    birdImageUrl: ''
   };
 
   componentDidMount() {
@@ -98,15 +102,6 @@ class HomePageContent extends Component {
         this.setState({ seenBirdsUid: snapshot.data().birds });
       });
     console.log(this.state.seenBirdsUid);
-
-    this.props.firebase
-      .storageRef()
-      .child('/birds/Firecrest.jpg')
-      .getDownloadURL()
-      .then(url => {
-        console.log(url);
-        this.setState({ firecrestUrl: url });
-      });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -155,8 +150,16 @@ class HomePageContent extends Component {
   };
 
   infoHandler = birdName => {
-    this.setState({ dialogTitle: birdName });
-    this.setState({ open: true });
+    this.props.firebase
+      .storageRef()
+      .child(`/birds/${birdName}.jpg`)
+      .getDownloadURL()
+      .then(url => {
+        console.log(url);
+        this.setState({ birdImageUrl: url });
+        this.setState({ dialogTitle: birdName });
+        this.setState({ open: true });
+      });
   };
 
   handleClose = () => {
@@ -179,14 +182,14 @@ class HomePageContent extends Component {
       open,
       dialogTitle,
       getPic,
-      firecrestUrl
+      birdImageUrl
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
     console.log(seenBirdsUid);
     // console.log(this.state);
 
-    console.log(firecrestUrl);
+    console.log(birdImageUrl);
 
     return (
       <Fragment>
@@ -262,8 +265,7 @@ class HomePageContent extends Component {
         >
           <DialogTitle>{this.state.dialogTitle}</DialogTitle>
           <DialogContent>
-            <Typography variant='body1'>Picture goes here</Typography>
-            <img src={firecrestUrl} alt='firecrest' />
+            <img className={classes.image} src={birdImageUrl} alt='firecrest' />
           </DialogContent>
         </Dialog>
       </Fragment>
