@@ -27,7 +27,8 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  InputAdornment
+  InputAdornment,
+  Divider
 } from '@material-ui/core';
 
 const styles = {
@@ -56,18 +57,29 @@ const styles = {
   titleGrid: {
     alignItems: 'center',
     textAlign: 'left',
-    margin: 'auto auto 30px auto'
+    margin: 'auto auto 20px auto'
+  },
+  searchBirds: {
+    flexGrow: 1,
+    width: '100%'
   },
   filterIcon: {
     textAlign: 'right'
   },
+  formGroupBirds: {
+    marginTop: '15px'
+  },
   dialog: {
-    textAlign: 'center',
-    minWidth: '500px'
-    // maxHeight: '500px'
+    // textAlign: 'center',
+    // minWidth: '500px',
+    maxHeight: '900px'
+    // margin: 'auto auto 10px auto'
   },
   image: {
-    maxWidth: '460px'
+    maxWidth: '500px',
+    paddingBottom: '10px',
+    marginTop: '15px',
+    textAlign: 'center'
   }
 };
 
@@ -207,12 +219,13 @@ class HomePageContent extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Grid container spacing={1} className={classes.titleGrid}>
-                      <Grid item xs={3}>
+                      {/* <Grid item xs={3}>
                         <Typography variant='h4'>Birds</Typography>
-                      </Grid>
-                      <Grid item xs={6}>
+                      </Grid> */}
+                      <Grid item xs={9}>
                         <TextField
-                          className={classes.margin}
+                          placeholder='Search birds...'
+                          className={classes.searchBirds}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position='start'>
@@ -231,7 +244,9 @@ class HomePageContent extends Component {
                       </Grid>
                     </Grid>
 
-                    <FormGroup>
+                    <Divider variant='light' />
+
+                    <FormGroup className={classes.formGroupBirds}>
                       {allBirds.map(bird => {
                         let isChecked = !!seenBirds.includes(bird.name);
                         return (
@@ -281,6 +296,7 @@ class HomePageContent extends Component {
           }}
         >
           <DialogTitle>{this.state.dialogTitle}</DialogTitle>
+          <Divider variant='middle' />
           <DialogContent>
             <img
               className={classes.image}
