@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputBase from '@material-ui/core/InputBase';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = {
   root: {
@@ -59,7 +60,9 @@ const Navigation = ({ authUser, classes, firebase }) => (
                   component={Link}
                   to={ROUTES.ACCOUNT}
                 >
-                  <AccountCircle />
+                  <Tooltip title='Account'>
+                    <AccountCircle />
+                  </Tooltip>
                 </IconButton>
               </Fragment>
             ) : (

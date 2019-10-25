@@ -98,10 +98,10 @@ class PasswordChangeForm extends Component {
               <Typography variant='h4' className={classes.typographyHeader}>
                 Account admin
               </Typography>
-              <Typography variant='body1' className={classes.sectionHeader}>
+              {/* <Typography variant='body1' className={classes.sectionHeader}>
                 <strong>Username:</strong> {username + ' '}
                 <strong>Email:</strong> {email}
-              </Typography>
+              </Typography> */}
               <Typography variant='h6' className={classes.sectionHeader}>
                 Reset password
               </Typography>
