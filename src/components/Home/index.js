@@ -10,6 +10,7 @@ import { AuthUserContext } from '../Session';
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import SearchIcon from '@material-ui/icons/Search';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {
   Typography,
@@ -24,7 +25,9 @@ import {
   Box,
   Dialog,
   DialogTitle,
-  DialogContent
+  DialogContent,
+  TextField,
+  InputAdornment
 } from '@material-ui/core';
 
 const styles = {
@@ -37,7 +40,7 @@ const styles = {
     maxWidth: '80%'
   },
   card: {
-    width: 350,
+    width: 450,
     minWidth: 150,
     minHeight: 140,
     maxWidth: 500,
@@ -51,14 +54,20 @@ const styles = {
     textAlign: 'left'
   },
   titleGrid: {
-    alignItems: 'center'
+    alignItems: 'center',
+    textAlign: 'left',
+    margin: 'auto auto 30px auto'
+  },
+  filterIcon: {
+    textAlign: 'right'
   },
   dialog: {
-    minWidth: '350px'
+    textAlign: 'center',
+    minWidth: '500px'
     // maxHeight: '500px'
   },
   image: {
-    maxWidth: '350px'
+    maxWidth: '460px'
   }
 };
 
@@ -155,7 +164,7 @@ class HomePageContent extends Component {
       .child(`/birds/${birdName}.jpg`)
       .getDownloadURL()
       .then(url => {
-        console.log(url);
+        // console.log(url);
         this.setState({ birdImageUrl: url });
         this.setState({ dialogTitle: birdName });
         this.setState({ open: true });
@@ -166,8 +175,8 @@ class HomePageContent extends Component {
     this.setState({ open: false });
   };
 
-  getPic = () => {
-    console.log('Get pic');
+  filterHandler = () => {
+    console.log('Filter clicked');
   };
 
   render() {
@@ -181,15 +190,13 @@ class HomePageContent extends Component {
       handleClose,
       open,
       dialogTitle,
-      getPic,
+      filterHandler,
       birdImageUrl
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
     console.log(seenBirdsUid);
     // console.log(this.state);
-
-    console.log(birdImageUrl);
 
     return (
       <Fragment>
@@ -200,14 +207,25 @@ class HomePageContent extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Grid container spacing={1} className={classes.titleGrid}>
-                      <Grid item xs={4}></Grid>
-                      <Grid item xs={4}>
+                      <Grid item xs={3}>
                         <Typography variant='h4'>Birds</Typography>
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid item xs={6}>
+                        <TextField
+                          className={classes.margin}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                <SearchIcon color='action' />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={3} className={classes.filterIcon}>
                         <Tooltip title='Filter seen birds'>
-                          <IconButton onClick={() => this.getPic()}>
-                            <FilterListIcon fontSize='large' />
+                          <IconButton onClick={() => this.filterHandler()}>
+                            <FilterListIcon />
                           </IconButton>
                         </Tooltip>
                       </Grid>
@@ -231,8 +249,7 @@ class HomePageContent extends Component {
                                     checked={isChecked}
                                     onClick={() =>
                                       this.checkboxHandler(isChecked, bird.uid)
-                                    } // don't know if this wants to be onClick or onCheck
-                                    // onChange={}
+                                    }
                                     value={bird.name}
                                   />
                                 }
@@ -265,7 +282,11 @@ class HomePageContent extends Component {
         >
           <DialogTitle>{this.state.dialogTitle}</DialogTitle>
           <DialogContent>
-            <img className={classes.image} src={birdImageUrl} alt='firecrest' />
+            <img
+              className={classes.image}
+              src={birdImageUrl}
+              alt='bird-image'
+            />
           </DialogContent>
         </Dialog>
       </Fragment>

@@ -42,7 +42,7 @@ const Navigation = ({ authUser, classes, firebase }) => (
           <img src={Logo} className={classes.logo} />
         </Link>
         <Typography className={classes.spacer}></Typography>
-        <InputBase className={classes.search} placeholder='Search…' />
+        <InputBase className={classes.search} placeholder='Search users…' />
         <Typography className={classes.spacer}></Typography>
         <AuthUserContext.Consumer>
           {authUser =>
