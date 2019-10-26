@@ -8,10 +8,10 @@
 
 - Search birds
 - Filter/unfilter checked birds
-- Refactor home
+- Refactor home into smaller components
 - Implement redux
 - Order birds alphabetically
-- Add "collapsed" alphabetical view of birds which can expand/collapse
+- Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
 
 ## Longer term
 
@@ -27,7 +27,7 @@
 
 ## To launch
 
-- Buy domain and hosting (look into Firebase hosting or netlify)
+- Buy domain and hosting (look into Firebase hosting or Netlify)
 - Decide launch strategy
 
 ## Possible additions (decide if these are MVP or not)
