@@ -29,6 +29,7 @@
 
 - Buy domain and hosting (look into Firebase hosting or Netlify)
 - Decide launch strategy
+- Make Firestore rules secure (currently open)
 
 ## Possible additions (decide if these are MVP or not)
 
