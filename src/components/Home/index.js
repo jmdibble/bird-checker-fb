@@ -76,7 +76,7 @@ const styles = {
     // margin: 'auto auto 10px auto'
   },
   image: {
-    maxWidth: '500px',
+    maxWidth: '300px',
     paddingBottom: '10px',
     marginTop: '15px',
     textAlign: 'center'
@@ -101,7 +101,7 @@ class HomePageContent extends Component {
     open: false,
     dialogTitle: '',
     birdImageUrl: '',
-    filtered: []
+    currentText: ''
   };
 
   componentDidMount() {
@@ -193,6 +193,10 @@ class HomePageContent extends Component {
     console.log('Filter clicked');
   };
 
+  searchHandler = e => {
+    this.setState({ currentText: e.target.value });
+  };
+
   render() {
     const {
       loading,
@@ -205,7 +209,9 @@ class HomePageContent extends Component {
       open,
       dialogTitle,
       filterHandler,
-      birdImageUrl
+      birdImageUrl,
+      currentText,
+      searchHandler
     } = this.state;
     const { classes } = this.props;
     console.log(seenBirds);
@@ -228,6 +234,8 @@ class HomePageContent extends Component {
                         <TextField
                           placeholder='Search birds...'
                           className={classes.searchBirds}
+                          ref={input => (this.searchBar = input)}
+                          onChange={this.searchHandler}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position='start'>
