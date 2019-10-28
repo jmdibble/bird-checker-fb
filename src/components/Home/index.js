@@ -100,7 +100,8 @@ class HomePageContent extends Component {
     checkedValues: [],
     open: false,
     dialogTitle: '',
-    birdImageUrl: ''
+    birdImageUrl: '',
+    filtered: []
   };
 
   componentDidMount() {
@@ -113,6 +114,7 @@ class HomePageContent extends Component {
         snapshot.forEach(doc => {
           allBirds.push({ name: doc.data().name, uid: doc.id });
         });
+        allBirds.sort((a, b) => a.name.localeCompare(b.name));
         this.setState({ allBirds: allBirds });
       });
 

@@ -10,7 +10,7 @@
 - Filter/unfilter checked birds
 - Refactor home into smaller components
 - Implement redux
-- Order birds alphabetically
+  // - Order birds alphabetically
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
 
 ## Longer term
