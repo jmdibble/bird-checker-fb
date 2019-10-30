@@ -39,18 +39,18 @@ const styles = {
   gridContainer: {
     margin: 'auto',
     justifyContent: 'center',
-    maxWidth: '80%'
+    width: '80%'
   },
   card: {
-    width: 450,
+    width: '60%',
     minWidth: 150,
-    minHeight: 140,
-    maxWidth: 500,
+    // minHeight: 140,
+    // maxWidth: 700,
     margin: '40px auto 60px auto'
   },
   root: {
-    flexGrow: 1,
-    textAlign: 'center'
+    // flexGrow: 1,
+    // textAlign: 'center'
   },
   itemsBox: {
     textAlign: 'left'
@@ -72,10 +72,7 @@ const styles = {
     marginTop: '15px'
   },
   dialog: {
-    // textAlign: 'center',
-    // minWidth: '500px',
     maxHeight: '900px'
-    // margin: 'auto auto 10px auto'
   },
   image: {
     maxWidth: '300px',
@@ -237,8 +234,6 @@ class HomePageContent extends Component {
 
   render() {
     const {
-      loading,
-      birds,
       seenBirds,
       seenBirdsUid,
       allBirds,
@@ -255,95 +250,83 @@ class HomePageContent extends Component {
 
     return (
       <Fragment>
-        <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justify='center' spacing={1}>
-              <Grid item>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Grid container spacing={1} className={classes.titleGrid}>
-                      <Grid item xs={9}>
-                        <TextField
-                          placeholder='Search birds...'
-                          className={classes.searchBirds}
-                          ref={input => (this.searchBar = input)}
-                          onChange={this.searchHandler}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position='start'>
-                                <SearchIcon color='action' />
-                              </InputAdornment>
-                            )
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={3} className={classes.filterIcon}>
-                        {filterClicked ? (
-                          <Tooltip title='Unfilter seen birds'>
-                            <IconButton onClick={() => this.filterHandler()}>
-                              <FilterListIcon color='primary' />
-                            </IconButton>
-                          </Tooltip>
-                        ) : (
-                          <Tooltip title='Filter seen birds'>
-                            <IconButton onClick={() => this.filterHandler()}>
-                              <FilterListIcon />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                      </Grid>
-                    </Grid>
-
-                    <Divider variant='light' />
-                    {listLoading ? (
-                      <CircularProgress className={classes.loading} />
-                    ) : (
-                      <FormGroup className={classes.formGroupBirds}>
-                        {filtered.map(bird => {
-                          let isChecked = !!seenBirds.includes(bird.name);
-                          return (
-                            <Box
-                              display='flex'
-                              className={classes.itemsBox}
-                              key={bird.name}
-                            >
-                              <Box flexGrow={1}>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      id='checkbox'
-                                      ref='checkbox'
-                                      checked={isChecked}
-                                      onClick={() =>
-                                        this.checkboxHandler(
-                                          isChecked,
-                                          bird.uid
-                                        )
-                                      }
-                                      value={bird.name}
-                                    />
-                                  }
-                                  label={bird.name}
-                                />
-                              </Box>
-                              <Box>
-                                <IconButton
-                                  onClick={() => this.infoHandler(bird.name)}
-                                >
-                                  <InfoOutlinedIcon />
-                                </IconButton>
-                              </Box>
-                            </Box>
-                          );
-                        })}
-                      </FormGroup>
-                    )}
-                  </CardContent>
-                </Card>
+        <Card className={classes.card}>
+          <CardContent>
+            <Grid container spacing={1} className={classes.titleGrid}>
+              <Grid item xs={9}>
+                <TextField
+                  placeholder='Search birds...'
+                  className={classes.searchBirds}
+                  ref={input => (this.searchBar = input)}
+                  onChange={this.searchHandler}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <SearchIcon color='action' />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+              <Grid item xs={3} className={classes.filterIcon}>
+                {filterClicked ? (
+                  <Tooltip title='Unfilter seen birds'>
+                    <IconButton onClick={() => this.filterHandler()}>
+                      <FilterListIcon color='primary' />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title='Filter seen birds'>
+                    <IconButton onClick={() => this.filterHandler()}>
+                      <FilterListIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+
+            <Divider variant='light' />
+            {listLoading ? (
+              <CircularProgress className={classes.loading} />
+            ) : (
+              <FormGroup className={classes.formGroupBirds}>
+                {filtered.map(bird => {
+                  let isChecked = !!seenBirds.includes(bird.name);
+                  return (
+                    <Box
+                      display='flex'
+                      className={classes.itemsBox}
+                      key={bird.name}
+                    >
+                      <Box flexGrow={1}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              id='checkbox'
+                              ref='checkbox'
+                              checked={isChecked}
+                              onClick={() =>
+                                this.checkboxHandler(isChecked, bird.uid)
+                              }
+                              value={bird.name}
+                            />
+                          }
+                          label={bird.name}
+                        />
+                      </Box>
+                      <Box>
+                        <IconButton onClick={() => this.infoHandler(bird.name)}>
+                          <InfoOutlinedIcon />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </FormGroup>
+            )}
+          </CardContent>
+        </Card>
+
         <Dialog
           open={this.state.open}
           onBackdropClick={this.handleClose}
