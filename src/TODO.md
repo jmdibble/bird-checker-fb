@@ -3,13 +3,14 @@
 ## Bugs
 
 - Error on checking/unchecking first bird - this issue is in componentDidUpdate not firing
+- Page shifts/wobbles upon filter icon hover when filtered
 
 ## Short term
 
 // - Search birds
 // - Order birds alphabetically
+// - Filter/unfilter checked birds
 
-- Filter/unfilter checked birds
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page

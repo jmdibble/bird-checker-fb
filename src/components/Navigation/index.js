@@ -50,7 +50,7 @@ const Navigation = ({ authUser, classes, firebase }) => (
             authUser ? (
               <Fragment>
                 <Button color='inherit' component={Link} to={ROUTES.HOME}>
-                  Home
+                  Birds
                 </Button>
                 <Button color='inherit' onClick={firebase.doSignOut}>
                   Logout

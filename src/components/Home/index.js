@@ -58,7 +58,8 @@ const styles = {
   titleGrid: {
     alignItems: 'center',
     textAlign: 'left',
-    margin: 'auto auto 20px auto'
+    margin: 'auto auto 20px auto',
+    padding: 7
   },
   searchBirds: {
     flexGrow: 1,
@@ -152,7 +153,6 @@ class HomePageContent extends Component {
       });
       this.setState({ listLoading: false });
     }
-    console.log(this.state.seenBirds);
   }
 
   componentWillUnmount() {
@@ -175,7 +175,6 @@ class HomePageContent extends Component {
           return bird.uid === uid;
         })
       );
-      // console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -190,7 +189,6 @@ class HomePageContent extends Component {
       .child(`/birds/${birdName}.jpg`)
       .getDownloadURL()
       .then(url => {
-        // console.log(url);
         this.setState({ birdImageUrl: url });
         this.setState({ dialogTitle: birdName });
         this.setState({ open: true });
@@ -247,7 +245,8 @@ class HomePageContent extends Component {
       birdImageUrl,
       filtered,
       imageLoading,
-      listLoading
+      listLoading,
+      filterClicked
     } = this.state;
     const { classes } = this.props;
 
@@ -279,11 +278,19 @@ class HomePageContent extends Component {
                         />
                       </Grid>
                       <Grid item xs={3} className={classes.filterIcon}>
-                        <Tooltip title='Filter seen birds'>
-                          <IconButton onClick={() => this.filterHandler()}>
-                            <FilterListIcon />
-                          </IconButton>
-                        </Tooltip>
+                        {filterClicked ? (
+                          <Tooltip title='Unfilter seen birds'>
+                            <IconButton onClick={() => this.filterHandler()}>
+                              <FilterListIcon color='primary' />
+                            </IconButton>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title='Filter seen birds'>
+                            <IconButton onClick={() => this.filterHandler()}>
+                              <FilterListIcon />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </Grid>
                     </Grid>
 
