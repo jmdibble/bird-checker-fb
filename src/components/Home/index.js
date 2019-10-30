@@ -106,7 +106,8 @@ class HomePageContent extends Component {
     open: false,
     dialogTitle: '',
     birdImageUrl: '',
-    filtered: []
+    filtered: [],
+    filterClicked: false
   };
 
   componentDidMount() {
@@ -201,14 +202,23 @@ class HomePageContent extends Component {
     this.setState({ open: false });
   };
 
-  // filterHandler = isChecked => {
-  //   let allbirdsArray = [];
-  //   let seenBirdsArray = [];
-  //   if (isChecked === true) {
-  //     allBirdsArray = this.
-  //     console.log(bird.name);
-  //   }
-  // };
+  filterHandler = () => {
+    let { allBirds, seenBirds, filterClicked } = this.state;
+    if (filterClicked === false) {
+      let seenBirdsArray = [];
+      allBirds.map(bird => {
+        let isChecked = !!seenBirds.includes(bird.name);
+        if (isChecked) {
+          seenBirdsArray.push(bird);
+          this.setState({ filtered: seenBirdsArray });
+        }
+      });
+      this.setState({ filterClicked: true });
+    } else {
+      this.setState({ filtered: allBirds });
+      this.setState({ filterClicked: false });
+    }
+  };
 
   searchHandler = e => {
     let allBirdsArray = [];
@@ -253,9 +263,6 @@ class HomePageContent extends Component {
                 <Card className={classes.card}>
                   <CardContent>
                     <Grid container spacing={1} className={classes.titleGrid}>
-                      {/* <Grid item xs={3}>
-                        <Typography variant='h4'>Birds</Typography>
-                      </Grid> */}
                       <Grid item xs={9}>
                         <TextField
                           placeholder='Search birds...'
@@ -273,9 +280,7 @@ class HomePageContent extends Component {
                       </Grid>
                       <Grid item xs={3} className={classes.filterIcon}>
                         <Tooltip title='Filter seen birds'>
-                          <IconButton
-                          // onClick={() => this.filterHandler(isChecked)}
-                          >
+                          <IconButton onClick={() => this.filterHandler()}>
                             <FilterListIcon />
                           </IconButton>
                         </Tooltip>
