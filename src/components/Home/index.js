@@ -28,7 +28,8 @@ import {
   DialogContent,
   TextField,
   InputAdornment,
-  Divider
+  Divider,
+  CircularProgress
 } from '@material-ui/core';
 
 const styles = {
@@ -80,6 +81,9 @@ const styles = {
     paddingBottom: '10px',
     marginTop: '15px',
     textAlign: 'center'
+  },
+  loading: {
+    margin: 10
   }
 };
 
@@ -93,7 +97,8 @@ const WrappedHomePage = ({ firebase }) => {
 
 class HomePageContent extends Component {
   state = {
-    loading: false,
+    listLoading: false,
+    imageLoading: false,
     allBirds: [],
     seenBirdsUid: [],
     seenBirds: [],
@@ -101,10 +106,11 @@ class HomePageContent extends Component {
     open: false,
     dialogTitle: '',
     birdImageUrl: '',
-    currentText: ''
+    filtered: []
   };
 
   componentDidMount() {
+    this.setState({ listLoading: true });
     // API call to set the state with the full list of birds
     let allBirds = [];
     this.unsubscribe = this.props.firebase
@@ -116,6 +122,7 @@ class HomePageContent extends Component {
         });
         allBirds.sort((a, b) => a.name.localeCompare(b.name));
         this.setState({ allBirds: allBirds });
+        this.setState({ filtered: allBirds });
       });
 
     // API call to set the state with all the uids of the birds the logged in user has seen
@@ -125,12 +132,14 @@ class HomePageContent extends Component {
         this.setState({ seenBirdsUid: snapshot.data().birds });
       });
     console.log(this.state.seenBirdsUid);
+    this.setState({ listLoading: false });
   }
 
   componentDidUpdate(prevProps, prevState) {
     // API call to map through each bird uid in the state and console log the name
     // then save any checked birds to state and console log it
     if (this.state.seenBirdsUid !== prevState.seenBirdsUid) {
+      this.setState({ listLoading: true });
       let seenBirds = [];
       this.state.seenBirdsUid.forEach(bird => {
         this.unsubscribe = this.props.firebase
@@ -140,6 +149,7 @@ class HomePageContent extends Component {
             this.setState({ seenBirds: seenBirds }); // revise why the setState can't move down 2 lines.
           });
       });
+      this.setState({ listLoading: false });
     }
     console.log(this.state.seenBirds);
   }
@@ -164,7 +174,7 @@ class HomePageContent extends Component {
           return bird.uid === uid;
         })
       );
-      console.log(newBirdArray);
+      // console.log(newBirdArray);
       this.unsubscribe = this.props.firebase
         .user(this.props.authUser.uid)
         .update({ birds: newBirdArray });
@@ -173,6 +183,7 @@ class HomePageContent extends Component {
   };
 
   infoHandler = birdName => {
+    this.setState({ imageLoading: true });
     this.props.firebase
       .storageRef()
       .child(`/birds/${birdName}.jpg`)
@@ -182,6 +193,7 @@ class HomePageContent extends Component {
         this.setState({ birdImageUrl: url });
         this.setState({ dialogTitle: birdName });
         this.setState({ open: true });
+        this.setState({ imageLoading: false });
       });
   };
 
@@ -189,12 +201,30 @@ class HomePageContent extends Component {
     this.setState({ open: false });
   };
 
-  filterHandler = () => {
-    console.log('Filter clicked');
-  };
+  // filterHandler = isChecked => {
+  //   let allbirdsArray = [];
+  //   let seenBirdsArray = [];
+  //   if (isChecked === true) {
+  //     allBirdsArray = this.
+  //     console.log(bird.name);
+  //   }
+  // };
 
   searchHandler = e => {
-    this.setState({ currentText: e.target.value });
+    let allBirdsArray = [];
+    let filteredArray = [];
+
+    if (e.target.value !== '') {
+      allBirdsArray = this.state.allBirds;
+      filteredArray = allBirdsArray.filter(item => {
+        const lc = item.name.toLowerCase();
+        const filter = e.target.value.toLowerCase();
+        return lc.includes(filter);
+      });
+    } else {
+      filteredArray = this.state.allBirds;
+    }
+    this.setState({ filtered: filteredArray });
   };
 
   render() {
@@ -204,19 +234,15 @@ class HomePageContent extends Component {
       seenBirds,
       seenBirdsUid,
       allBirds,
-      infoHandler,
-      handleClose,
-      open,
-      dialogTitle,
-      filterHandler,
       birdImageUrl,
-      currentText,
-      searchHandler
+      filtered,
+      imageLoading,
+      listLoading
     } = this.state;
     const { classes } = this.props;
+
     console.log(seenBirds);
     console.log(seenBirdsUid);
-    // console.log(this.state);
 
     return (
       <Fragment>
@@ -247,7 +273,9 @@ class HomePageContent extends Component {
                       </Grid>
                       <Grid item xs={3} className={classes.filterIcon}>
                         <Tooltip title='Filter seen birds'>
-                          <IconButton onClick={() => this.filterHandler()}>
+                          <IconButton
+                          // onClick={() => this.filterHandler(isChecked)}
+                          >
                             <FilterListIcon />
                           </IconButton>
                         </Tooltip>
@@ -255,43 +283,49 @@ class HomePageContent extends Component {
                     </Grid>
 
                     <Divider variant='light' />
-
-                    <FormGroup className={classes.formGroupBirds}>
-                      {allBirds.map(bird => {
-                        let isChecked = !!seenBirds.includes(bird.name);
-                        return (
-                          <Box
-                            display='flex'
-                            className={classes.itemsBox}
-                            key={bird.name}
-                          >
-                            <Box flexGrow={1}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    id='checkbox'
-                                    ref='checkbox'
-                                    checked={isChecked}
-                                    onClick={() =>
-                                      this.checkboxHandler(isChecked, bird.uid)
-                                    }
-                                    value={bird.name}
-                                  />
-                                }
-                                label={bird.name}
-                              />
+                    {listLoading ? (
+                      <CircularProgress className={classes.loading} />
+                    ) : (
+                      <FormGroup className={classes.formGroupBirds}>
+                        {filtered.map(bird => {
+                          let isChecked = !!seenBirds.includes(bird.name);
+                          return (
+                            <Box
+                              display='flex'
+                              className={classes.itemsBox}
+                              key={bird.name}
+                            >
+                              <Box flexGrow={1}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      id='checkbox'
+                                      ref='checkbox'
+                                      checked={isChecked}
+                                      onClick={() =>
+                                        this.checkboxHandler(
+                                          isChecked,
+                                          bird.uid
+                                        )
+                                      }
+                                      value={bird.name}
+                                    />
+                                  }
+                                  label={bird.name}
+                                />
+                              </Box>
+                              <Box>
+                                <IconButton
+                                  onClick={() => this.infoHandler(bird.name)}
+                                >
+                                  <InfoOutlinedIcon />
+                                </IconButton>
+                              </Box>
                             </Box>
-                            <Box>
-                              <IconButton
-                                onClick={() => this.infoHandler(bird.name)}
-                              >
-                                <InfoOutlinedIcon />
-                              </IconButton>
-                            </Box>
-                          </Box>
-                        );
-                      })}
-                    </FormGroup>
+                          );
+                        })}
+                      </FormGroup>
+                    )}
                   </CardContent>
                 </Card>
               </Grid>
@@ -308,11 +342,15 @@ class HomePageContent extends Component {
           <DialogTitle>{this.state.dialogTitle}</DialogTitle>
           <Divider variant='middle' />
           <DialogContent>
-            <img
-              className={classes.image}
-              src={birdImageUrl}
-              alt='bird-image'
-            />
+            {imageLoading ? (
+              <CircularProgress className={classes.loading} />
+            ) : (
+              <img
+                className={classes.image}
+                src={birdImageUrl}
+                alt='bird-image'
+              />
+            )}
           </DialogContent>
         </Dialog>
       </Fragment>
