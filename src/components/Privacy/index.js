@@ -15,7 +15,10 @@ const styles = {
     textAlign: 'center'
   },
   title: {
-    paddingTop: 60
+    paddingTop: 70
+  },
+  bodyText: {
+    marginTop: 25
   }
 };
 
@@ -28,7 +31,17 @@ const Privacy = ({ classes }) => {
         </Typography>
       </Box>
       <div className={classes.textDiv}>
-        <Typography variant='body1'>Some privacy stuff</Typography>
+        <Typography variant='h6' className={classes.bodyText}>
+          The use of this website is subject to the following privacy notice:
+        </Typography>
+        <Typography variant='body1' className={classes.bodyText}>
+          Birdbook takes your privacy seriously.
+        </Typography>
+        <Typography variant='body1' className={classes.bodyText}>
+          We store all your data securely. We do not, and never will buy or sell
+          any sensitive data and always put the privacy and security of our
+          users as the top priority.
+        </Typography>
       </div>
     </Fragment>
   );

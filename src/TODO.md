@@ -3,7 +3,7 @@
 ## Bugs
 
 - Error on checking/unchecking first bird - this issue is in componentDidUpdate not firing
-- Page shifts/wobbles upon filter icon hover when filtered
+- Page shifts/wobbles upon filter icon hover when filtered (this might be fixed now)
 
 ## Short term
 
@@ -17,8 +17,8 @@
 
 ## Longer term
 
-- Privacy policy
-- Terms and conditions
+// - Privacy policy
+// - Terms and conditions
 
 ## Before launch
 
@@ -38,3 +38,4 @@
 - Add latin name for birds next to main name
 - Add "location" map on bird info dialog
 - Search users and view their seen birds
+- Add profile picture for users
