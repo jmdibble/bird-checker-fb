@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import * as ROUTES from '../../constants/routes';
+
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -26,6 +28,12 @@ const styles = {
   },
   footerText: {
     margin: 'auto 5px auto 5px'
+  },
+  link: {
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'none'
+    }
   }
 };
 
@@ -39,10 +47,14 @@ const Footer = ({ classes }) => {
       </Container>
       <Container maxWidth='sm' className={classes.container}>
         <Typography className={classes.footerText} variant='caption'>
-          Privacy
+          <Link href={ROUTES.PRIVACY} className={classes.link}>
+            Privacy
+          </Link>
         </Typography>
         <Typography className={classes.footerText} variant='caption'>
-          Terms & Conditions
+          <Link href={ROUTES.TERMS} className={classes.link}>
+            Terms of Use
+          </Link>
         </Typography>
       </Container>
     </footer>
