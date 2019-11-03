@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -6,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 
 import CopyrightIcon from '@material-ui/icons/Copyright';
 
@@ -33,7 +34,8 @@ const styles = {
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none'
-    }
+    },
+    color: '#5cdb95'
   }
 };
 
@@ -47,12 +49,12 @@ const Footer = ({ classes }) => {
       </Container>
       <Container maxWidth='sm' className={classes.container}>
         <Typography className={classes.footerText} variant='caption'>
-          <Link href={ROUTES.PRIVACY} className={classes.link}>
+          <Link component={Link} to={ROUTES.PRIVACY} className={classes.link}>
             Privacy
           </Link>
         </Typography>
         <Typography className={classes.footerText} variant='caption'>
-          <Link href={ROUTES.TERMS} className={classes.link}>
+          <Link component={Link} to={ROUTES.TERMS} className={classes.link}>
             Terms of Use
           </Link>
         </Typography>

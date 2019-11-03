@@ -191,7 +191,7 @@ const Landing = ({ classes }) => (
       However, it isn't free to build, host and maintain this application, so I
       appreciate anyone contributing to the code and/or making donations. If
       you'd like to dontate to help keep this service running as long as
-      possible, please do so here.
+      possible, please do so below.
     </Typography>
     <div className={classes.buttonWrapper}>
       <Button

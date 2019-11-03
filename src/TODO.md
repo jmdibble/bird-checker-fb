@@ -2,8 +2,9 @@
 
 ## Bugs
 
+// - Page shifts/wobbles upon filter icon hover when filtered (this might be fixed now)
+
 - Error on checking/unchecking first bird - this issue is in componentDidUpdate not firing
-- Page shifts/wobbles upon filter icon hover when filtered (this might be fixed now)
 
 ## Short term
 
@@ -22,10 +23,12 @@
 
 ## Before launch
 
+// - Properly design logo
+
 - Add the rest of the birds to DB
 - UI audit - some UI is not uniform
-- Properly design logo
 - Hook up email address for support form in Account
+- Clean up console.log and any console errors
 
 ## To launch
 

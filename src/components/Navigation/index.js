@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
-import Logo from '../../images/logo1.png';
+import Logo from '../../images/logo2.png';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
@@ -22,14 +22,14 @@ const styles = {
     flexGrow: 1
   },
   spacer: {
-    flexGrow: 0.5
+    flexGrow: 1
   },
   logo: {
-    maxWidth: '60px'
+    maxWidth: '70px'
   },
   search: {
     flexGrow: 1,
-    backgroundColor: '#ffffff40', // this is 40% transparency
+    backgroundColor: '#ffffff40',
     borderRadius: '5px',
     padding: '3px 5px 3px 15px'
   }
