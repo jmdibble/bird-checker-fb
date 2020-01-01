@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Splash from '../../images/splash3.jpg';
 import * as ROUTES from '../../constants/routes';
+import { AuthUserContext } from '../Session';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
@@ -69,7 +70,7 @@ const styles = {
   }
 };
 
-const Landing = ({ classes }) => (
+const Landing = ({ authUser, classes }) => (
   <Fragment>
     <div className={classes.heroImage}>
       <div className={classes.heroText}>
@@ -80,23 +81,33 @@ const Landing = ({ classes }) => (
           you've seen.
         </Typography>
       </div>
-      <Button
-        className={classes.button}
-        variant='contained'
-        color='secondary'
-        component={Link}
-        to={ROUTES.SIGN_UP}
-      >
-        Sign up
-      </Button>
-      <Button
-        className={classes.button}
-        color='#05386b'
-        component={Link}
-        to={ROUTES.SIGN_IN}
-      >
-        Log in
-      </Button>
+      <AuthUserContext.Consumer>
+        {authUser =>
+          authUser ? (
+            <div></div>
+          ) : (
+            <div>
+              <Button
+                className={classes.button}
+                variant='contained'
+                color='secondary'
+                component={Link}
+                to={ROUTES.SIGN_UP}
+              >
+                Sign up
+              </Button>
+              <Button
+                className={classes.button}
+                color='#05386b'
+                component={Link}
+                to={ROUTES.SIGN_IN}
+              >
+                Log in
+              </Button>
+            </div>
+          )
+        }
+      </AuthUserContext.Consumer>
     </div>
     <Typography variant='h5' className={classes.bodyText}>
       About Birdbook
