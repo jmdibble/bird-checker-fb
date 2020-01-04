@@ -44,7 +44,8 @@ const Footer = ({ classes }) => {
     <footer className={classes.footer}>
       <Container maxWidth='sm' className={classes.container}>
         <Typography variant='caption'>
-          <CopyrightIcon className={classes.copyright} /> 2019 Birdbook
+          <CopyrightIcon className={classes.copyright} /> 2019 Birdbook. All
+          rights reserved.
         </Typography>
       </Container>
       <Container maxWidth='sm' className={classes.container}>
