@@ -11,11 +11,11 @@
 // - Search birds
 // - Order birds alphabetically
 // - Filter/unfilter checked birds
+// - Implement hover background color over each bird
 
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
-- Implement hover background color over each bird
 - Fix suggestion form
 - Add password validation
 - Add username validation

@@ -53,7 +53,12 @@ const styles = {
     // textAlign: 'center'
   },
   itemsBox: {
-    textAlign: 'left'
+    textAlign: 'left',
+    padding: '0px 10px 0px 10px',
+    '&:hover': {
+      backgroundColor: '#f1f1f1',
+      borderRadius: '5px'
+    }
   },
   titleGrid: {
     alignItems: 'center',
