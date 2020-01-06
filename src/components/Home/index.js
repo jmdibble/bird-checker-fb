@@ -11,11 +11,13 @@ import { AuthUserContext } from '../Session';
 import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {
   Typography,
   Card,
   CardContent,
+  Button,
   Grid,
   Checkbox,
   FormControlLabel,
@@ -29,7 +31,9 @@ import {
   TextField,
   InputAdornment,
   Divider,
-  CircularProgress
+  CircularProgress,
+  Menu,
+  MenuItem
 } from '@material-ui/core';
 
 const styles = {
@@ -105,6 +109,7 @@ class HomePageContent extends Component {
     allBirds: [],
     seenBirdsUid: [],
     seenBirds: [],
+    unseenBirds: [],
     checkedValues: [],
     open: false,
     dialogTitle: '',
@@ -202,7 +207,7 @@ class HomePageContent extends Component {
     this.setState({ open: false });
   };
 
-  filterHandler = () => {
+  filterSeenBirdsHandler = () => {
     let { allBirds, seenBirds, filterClicked } = this.state;
     if (filterClicked === false) {
       let seenBirdsArray = [];
@@ -219,6 +224,35 @@ class HomePageContent extends Component {
       this.setState({ filterClicked: false });
     }
   };
+
+  filterUnseenBirdsHandler = () => {
+    let { allBirds, seenBirds, unseenBirds, filterClicked } = this.state;
+    let allBirdsNames = [];
+    allBirds.map(bird => {
+      allBirdsNames.push(bird.name);
+    });
+    console.log(allBirdsNames, seenBirds);
+    let unseenBirdsArray = allBirdsNames.filter(x => !seenBirds.includes(x));
+    console.log(unseenBirdsArray);
+
+    if (filterClicked === false) {
+      let unseenBirdsNewArray = [];
+      allBirds.map(bird => {
+        let isChecked = unseenBirdsArray.includes(bird.name);
+        if (isChecked) {
+          unseenBirdsNewArray.push(bird);
+          console.log(unseenBirdsNewArray);
+          this.setState({ filtered: unseenBirdsNewArray });
+        }
+      });
+      this.setState({ filterClicked: true });
+    } else {
+      this.setState({ filtered: allBirds });
+      this.setState({ filterClicked: false });
+    }
+  };
+
+  menuDrowpdownHandler = () => {};
 
   searchHandler = e => {
     let allBirdsArray = [];
@@ -273,20 +307,44 @@ class HomePageContent extends Component {
                   }}
                 />
               </Grid>
-              <Grid item xs={3} className={classes.filterIcon}>
+              {/* <Grid item xs={3} className={classes.filterIcon}>
                 {filterClicked ? (
                   <Tooltip title='Unfilter seen birds'>
-                    <IconButton onClick={() => this.filterHandler()}>
+                    <IconButton onClick={() => this.filterSeenBirdsHandler()}>
                       <FilterListIcon color='primary' />
                     </IconButton>
                   </Tooltip>
                 ) : (
                   <Tooltip title='Filter seen birds'>
-                    <IconButton onClick={() => this.filterHandler()}>
+                    <IconButton onClick={() => this.filterSeenBirdsHandler()}>
                       <FilterListIcon />
                     </IconButton>
                   </Tooltip>
                 )}
+              </Grid> */}
+              <Grid item xs={3} className={classes.filterIcon}>
+                <PopupState variant='popover' popupId='demo-popup-menu'>
+                  {popupState => (
+                    <React.Fragment>
+                      <Tooltip title='Filter birds'>
+                        <IconButton {...bindTrigger(popupState)}>
+                          <FilterListIcon />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Menu {...bindMenu(popupState)}>
+                        <MenuItem onClick={() => this.filterSeenBirdsHandler()}>
+                          Seen birds
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => this.filterUnseenBirdsHandler()}
+                        >
+                          Unseen birds
+                        </MenuItem>
+                      </Menu>
+                    </React.Fragment>
+                  )}
+                </PopupState>
               </Grid>
             </Grid>
 
