@@ -15,11 +15,24 @@
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
+- Implement hover background color over each bird
+- Fix suggestion form
+- Add password validation
+- Add username validation
+- Add some explanation
+- Fix homepage lag
+- Save progress type indicator
+- Filter birds that have been seen
+- Esc out of bird preview
 
 ## Longer term
 
 // - Privacy policy
 // - Terms and conditions
+
+- Bird hover preview
+- Add geotag
+- Screenshots for features
 
 ## Before launch
 
