@@ -320,7 +320,7 @@ class HomePageContent extends Component {
                   }}
                 />
               </Grid>
-              {/* <Grid item xs={3} className={classes.filterIcon}>
+              <Grid item xs={3} className={classes.filterIcon}>
                 {filterClicked ? (
                   <Tooltip title='Unfilter seen birds'>
                     <IconButton onClick={() => this.filterSeenBirdsHandler()}>
@@ -328,36 +328,37 @@ class HomePageContent extends Component {
                     </IconButton>
                   </Tooltip>
                 ) : (
-                  <Tooltip title='Filter seen birds'>
-                    <IconButton onClick={() => this.filterSeenBirdsHandler()}>
-                      <FilterListIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </Grid> */}
-              <Grid item xs={3} className={classes.filterIcon}>
-                <PopupState variant='popover' popupId='demo-popup-menu'>
-                  {popupState => (
-                    <React.Fragment>
-                      <Tooltip title='Filter birds'>
-                        <IconButton {...bindTrigger(popupState)}>
-                          <FilterListIcon />
-                        </IconButton>
-                      </Tooltip>
+                  <PopupState variant='popover' popupId='demo-popup-menu'>
+                    {popupState => (
+                      <React.Fragment>
+                        <Tooltip title='Filter birds'>
+                          <IconButton {...bindTrigger(popupState)}>
+                            <FilterListIcon />
+                          </IconButton>
+                        </Tooltip>
 
-                      <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={() => this.filterSeenBirdsHandler()}>
-                          Seen birds
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => this.filterUnseenBirdsHandler()}
-                        >
-                          Unseen birds
-                        </MenuItem>
-                      </Menu>
-                    </React.Fragment>
-                  )}
-                </PopupState>
+                        <Menu {...bindMenu(popupState)}>
+                          <MenuItem
+                            onClick={() => {
+                              this.filterSeenBirdsHandler();
+                              popupState.close();
+                            }}
+                          >
+                            Seen birds
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              this.filterUnseenBirdsHandler();
+                              popupState.close();
+                            }}
+                          >
+                            Unseen birds
+                          </MenuItem>
+                        </Menu>
+                      </React.Fragment>
+                    )}
+                  </PopupState>
+                )}
               </Grid>
             </Grid>
 
