@@ -12,18 +12,19 @@
 // - Order birds alphabetically
 // - Filter/unfilter checked birds
 // - Implement hover background color over each bird
+// - Add password validation
+// - Add username validation
+// - Filter birds that have been seen
 
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
 - Fix suggestion form
-- Add password validation
-- Add username validation
-- Add some explanation
 - Fix homepage lag
-- Save progress type indicator
-- Filter birds that have been seen
+- Add friend search functionality
 - Esc out of bird preview
+- Add some explanation on landing page
+- Save progress type indicator
 
 ## Longer term
 

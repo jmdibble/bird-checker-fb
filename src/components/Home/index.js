@@ -226,28 +226,6 @@ class HomePageContent extends Component {
   };
 
   filterUnseenBirdsHandler = () => {
-    // let { allBirds, seenBirds, unseenBirds, filterClicked } = this.state;
-    // let allBirdsNames = [];
-    // allBirds.map(bird => {
-    //   allBirdsNames.push(bird.name);
-    // });
-    // let unseenBirdsArray = allBirdsNames.filter(x => !seenBirds.includes(x));
-
-    // if (filterClicked === false) {
-    //   let unseenBirdsNewArray = [];
-    //   allBirds.map(bird => {
-    //     let isChecked = unseenBirdsArray.includes(bird.name);
-    //     if (isChecked) {
-    //       unseenBirdsNewArray.push(bird);
-    //       console.log(unseenBirdsNewArray);
-    //       this.setState({ filtered: unseenBirdsNewArray });
-    //     }
-    //   });
-    //   this.setState({ filterClicked: true });
-    // } else {
-    //   this.setState({ filtered: allBirds });
-    //   this.setState({ filterClicked: false });
-    // }
     let { allBirds, seenBirds, filterClicked } = this.state;
     if (filterClicked === false) {
       let seenBirdsArray = [];

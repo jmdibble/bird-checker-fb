@@ -200,6 +200,7 @@ class SignUpFormBase extends Component {
                   type='submit'
                   variant='contained'
                   color='primary'
+                  disabled={isInvalid}
                 >
                   Sign up
                 </Button>
