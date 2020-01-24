@@ -14,6 +14,8 @@ import {
   TextareaAutosize
 } from '@material-ui/core';
 
+import emailjs from 'emailjs-com';
+
 const styles = {
   card: {
     padding: '10px',
@@ -36,9 +38,45 @@ const styles = {
 };
 
 class ReportBug extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      subject: '',
+      content: ''
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
   onSubmit = event => {
     event.preventDefault();
+    emailjs
+      .send(
+        'default_service',
+        'suggestion_firm',
+        this.state,
+        'user_YzqATWnhoGzmy1tHYi8ri'
+      )
+      .then(
+        response => {
+          console.log(this.state);
+          console.log('SUCCESS!', response.status, response.text);
+          this.setState({ subject: '', content: '' });
+        },
+        err => {
+          console.log('FAILED...', err);
+        }
+      );
   };
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -54,12 +92,21 @@ class ReportBug extends Component {
             </Typography>
             <form onSubmit={this.onSubmit}>
               <Grid>
-                <TextField className={classes.textField} label='Subject' />
                 <TextField
+                  name='subject'
+                  className={classes.textField}
+                  label='Subject'
+                  value={this.state.subject}
+                  onChange={this.handleInputChange}
+                />
+                <TextField
+                  name='content'
                   className={classes.textField}
                   label='Describe it here'
                   multiline='true'
                   rows='5'
+                  value={this.state.content}
+                  onChange={this.handleInputChange}
                 />
               </Grid>
               <Grid>
