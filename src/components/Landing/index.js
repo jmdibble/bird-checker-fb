@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Splash from '../../images/splash3.jpg';
+import Splash from '../../images/birdhero2.jpg';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
@@ -29,20 +29,29 @@ const styles = {
     margin: '0px 0px 70px 0px'
   },
   heroText: {
-    textAlign: 'center',
+    position: 'absolute',
+    left: '25%',
+    top: '35%',
+    textAlign: 'left',
+    maxWidth: '380px',
     color: '#edf5e1',
-    padding: '60px 0px 50px 0px'
+    padding: '10px 10px 10px 10px'
   },
   subtitle: {
     margin: '30px auto auto auto'
   },
-  bodyText: {
+  bodyTitle: {
     textAlign: 'center',
     margin: '10px auto 50px auto',
     maxWidth: '700px'
   },
+  bodyText: {
+    textAlign: 'left',
+    margin: '10px auto 50px auto',
+    maxWidth: '700px'
+  },
   button: {
-    margin: 5
+    margin: '25px 15px 0 0 '
   },
   buttonWrapper: {
     textAlign: 'center'
@@ -58,7 +67,7 @@ const styles = {
   card: {
     minWidth: 100,
     minHeight: 140,
-    maxWidth: 200,
+    maxWidth: 215,
     margin: '40px auto 60px auto'
   },
   root: {
@@ -77,39 +86,39 @@ const Landing = ({ authUser, classes }) => (
         <Typography variant='h3'>Britain's #1</Typography>
         <Typography variant='h3'>Digital Bird Book</Typography>
         <Typography variant='subtitle1' className={classes.subtitle}>
-          Birdbook is the only digital solution to keep track of the birds
+          Bird book is the only digital solution to keep track of the birds
           you've seen.
         </Typography>
+        <AuthUserContext.Consumer>
+          {authUser =>
+            authUser ? (
+              <div></div>
+            ) : (
+              <div>
+                <Button
+                  className={classes.button}
+                  variant='contained'
+                  color='secondary'
+                  component={Link}
+                  to={ROUTES.SIGN_UP}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  className={classes.button}
+                  color='#05386b'
+                  component={Link}
+                  to={ROUTES.SIGN_IN}
+                >
+                  Log in
+                </Button>
+              </div>
+            )
+          }
+        </AuthUserContext.Consumer>
       </div>
-      <AuthUserContext.Consumer>
-        {authUser =>
-          authUser ? (
-            <div></div>
-          ) : (
-            <div>
-              <Button
-                className={classes.button}
-                variant='contained'
-                color='secondary'
-                component={Link}
-                to={ROUTES.SIGN_UP}
-              >
-                Sign up
-              </Button>
-              <Button
-                className={classes.button}
-                color='#05386b'
-                component={Link}
-                to={ROUTES.SIGN_IN}
-              >
-                Log in
-              </Button>
-            </div>
-          )
-        }
-      </AuthUserContext.Consumer>
     </div>
-    <Typography variant='h5' className={classes.bodyText}>
+    <Typography variant='h5' className={classes.bodyTitle}>
       About Birdbook
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
@@ -180,7 +189,7 @@ const Landing = ({ authUser, classes }) => (
         </Grid>
       </Grid>
     </Grid>
-    <Typography variant='h5' className={classes.bodyText}>
+    <Typography variant='h5' className={classes.bodyTitle}>
       The birds
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
@@ -191,7 +200,7 @@ const Landing = ({ authUser, classes }) => (
         https://www.bou.org.uk/british-list/
       </a>
     </Typography>
-    <Typography variant='h5' className={classes.bodyText}>
+    <Typography variant='h5' className={classes.bodyTitle}>
       Technical
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>

@@ -17,7 +17,7 @@ const styles = {
     textAlign: 'center',
     padding: 20,
     marginTop: '100px',
-    backgroundColor: '#379683',
+    backgroundColor: '#223238',
     minHeight: '80px'
   },
   container: {

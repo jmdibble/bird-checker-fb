@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
-import Logo from '../../images/logo2.png';
+import Logo from '../../images/birdbook logo2.png';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
@@ -21,11 +21,15 @@ const styles = {
   root: {
     flexGrow: 1
   },
+  header: {
+    backgroundColor: '#223238',
+    boxShadow: 'none'
+  },
   spacer: {
     flexGrow: 1
   },
   logo: {
-    maxWidth: '70px'
+    maxWidth: '100px'
   },
   search: {
     flexGrow: 1,
@@ -37,7 +41,7 @@ const styles = {
 
 const Navigation = ({ authUser, classes, firebase }) => (
   <div>
-    <AppBar position='static'>
+    <AppBar className={classes.header} position='static'>
       <Toolbar>
         <Link to='/'>
           <img src={Logo} className={classes.logo} />

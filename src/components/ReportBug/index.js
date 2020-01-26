@@ -21,7 +21,7 @@ const styles = {
     padding: '10px',
     margin: '50px auto 50px auto',
     width: '80%',
-    maxWidth: '1200px',
+    maxWidth: '1000px',
     textAlign: 'center'
   },
   textField: {
