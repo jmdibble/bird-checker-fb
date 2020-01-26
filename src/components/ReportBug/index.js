@@ -41,6 +41,7 @@ class ReportBug extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
       subject: '',
       content: ''
     };
@@ -60,7 +61,7 @@ class ReportBug extends Component {
         response => {
           console.log(this.state);
           console.log('SUCCESS!', response.status, response.text);
-          this.setState({ subject: '', content: '' });
+          this.setState({ subject: '', content: '', email: '' });
         },
         err => {
           console.log('FAILED...', err);
@@ -92,6 +93,13 @@ class ReportBug extends Component {
             </Typography>
             <form onSubmit={this.onSubmit}>
               <Grid>
+                <TextField
+                  name='email'
+                  className={classes.textField}
+                  label='Your email'
+                  value={this.state.email}
+                  onChange={this.handleInputChange}
+                />
                 <TextField
                   name='subject'
                   className={classes.textField}
