@@ -7,7 +7,6 @@ import * as ROUTES from '../../constants/routes';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-// import Link from '@material-ui/core/Link';
 
 import CopyrightIcon from '@material-ui/icons/Copyright';
 
@@ -24,6 +23,7 @@ const styles = {
     marginTop: '10px'
   },
   copyright: {
+    color: '#edf5e1',
     fontSize: '12px',
     verticalAlign: 'text-top'
   },
@@ -35,7 +35,8 @@ const styles = {
     '&:hover': {
       textDecoration: 'none'
     },
-    color: '#5cdb95'
+    color: '#5cdb95',
+    margin: 10
   }
 };
 
@@ -43,21 +44,27 @@ const Footer = ({ classes }) => {
   return (
     <footer className={classes.footer}>
       <Container maxWidth='sm' className={classes.container}>
-        <Typography variant='caption'>
+        <Typography className={classes.copyright} variant='caption'>
           <CopyrightIcon className={classes.copyright} /> 2019 Birdbook. All
           rights reserved.
         </Typography>
       </Container>
       <Container maxWidth='sm' className={classes.container}>
-        <Typography className={classes.footerText} variant='caption'>
-          <Link component={Link} to={ROUTES.PRIVACY} className={classes.link}>
-            Privacy
-          </Link>
+        <Typography
+          component={Link}
+          to={ROUTES.PRIVACY}
+          className={classes.link}
+          variant='caption'
+        >
+          Privacy
         </Typography>
-        <Typography className={classes.footerText} variant='caption'>
-          <Link component={Link} to={ROUTES.TERMS} className={classes.link}>
-            Terms of Use
-          </Link>
+        <Typography
+          component={Link}
+          to={ROUTES.TERMS}
+          className={classes.link}
+          variant='caption'
+        >
+          Terms of Use
         </Typography>
       </Container>
     </footer>

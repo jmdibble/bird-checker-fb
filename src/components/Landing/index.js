@@ -19,7 +19,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 const styles = {
   heroImage: {
-    backgroundImage: `url(${Splash})`,
+    backgroundImage: `linear-gradient(rgba(34, 50, 56, 1) 0%,rgba(34, 50, 56, 0.1) 30%), url(${Splash})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
