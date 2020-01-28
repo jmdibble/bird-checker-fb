@@ -17,11 +17,11 @@
 // - Filter birds that have been seen
 // - Fix suggestion form
 // - Add email to suggestion form
+// - Fix homepage lag
 
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
-- Fix homepage lag
 - Add friend search functionality
 - Esc out of bird preview
 - Add some explanation on landing page
