@@ -7,7 +7,8 @@ import {
 const INITIAL_STATE = {
   error: {},
   loading: false,
-  birdImageUrl: ''
+  birdImageUrl: '',
+  birdName: ''
 };
 
 export default function info(state = INITIAL_STATE, action) {
@@ -21,7 +22,8 @@ export default function info(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        birdImageUrl: action.payload.imageUrl
+        birdImageUrl: action.payload.imageUrl,
+        birdName: action.payload.birdName
       };
     case INFO_CLICKED_FAIL:
       return {

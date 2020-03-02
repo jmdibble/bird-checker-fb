@@ -27,7 +27,7 @@ const styles = {
 
 export class InfoDialog extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, birdName } = this.props;
     return (
       <Dialog
         open={this.props.dialogOpen}
@@ -36,7 +36,7 @@ export class InfoDialog extends Component {
           paper: classes.dialog
         }}
       >
-        <DialogTitle>Fix me</DialogTitle>
+        <DialogTitle>{birdName}</DialogTitle>
         <Divider variant='middle' />
         <DialogContent>
           {this.props.imageLoading ? (

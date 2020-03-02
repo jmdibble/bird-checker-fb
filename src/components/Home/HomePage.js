@@ -7,6 +7,7 @@ import { getBirds, searchFilter, infoClicked } from '../../redux/index';
 import BirdsList from './BirdsList';
 import SearchBar from './SearchBar';
 import InfoDialog from './InfoDialog';
+import Filter from './Filter';
 // MUI
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Grid } from '@material-ui/core';
@@ -40,7 +41,6 @@ class HomePage extends Component {
 
   handleInfo = birdName => {
     this.props.infoClicked(this.props.firebase, birdName);
-    console.log(birdName);
     this.openDialog();
   };
 
@@ -59,29 +59,28 @@ class HomePage extends Component {
       filteredList,
       infoClicked,
       firebase,
-      birdImageUrl
+      birdImageUrl,
+      birdName
     } = this.props;
-    // console.log(filteredList);
-    console.log(birdImageUrl);
     return (
       <Card className={classes.card}>
         <CardContent>
           <Grid container spacing={1} className={classes.titleGrid}>
-            <Grid item xs={9}>
-              <SearchBar onChange={this.handleSearch} />
-              <BirdsList
-                allBirds={filteredList.length > 0 ? filteredList : birds.birds}
-                infoClicked={() => infoClicked(firebase)}
-                handleInfo={this.handleInfo}
-              />
-              <InfoDialog
-                birdImageUrl={birdImageUrl}
-                dialogOpen={this.state.dialogOpen}
-                dialogClose={this.closeDialog}
-                imageLoading={this.props.imageLoading}
-              />
-            </Grid>
+            <SearchBar onChange={this.handleSearch} />
+            <Filter />
           </Grid>
+          <BirdsList
+            allBirds={filteredList.length > 0 ? filteredList : birds.birds}
+            infoClicked={() => infoClicked(firebase)}
+            handleInfo={this.handleInfo}
+          />
+          <InfoDialog
+            birdImageUrl={birdImageUrl}
+            birdName={birdName}
+            dialogOpen={this.state.dialogOpen}
+            dialogClose={this.closeDialog}
+            imageLoading={this.props.imageLoading}
+          />
         </CardContent>
       </Card>
     );
@@ -100,7 +99,8 @@ const mapStateToProps = state => {
     error: state.birds.error,
     filteredList: state.filters.filteredList,
     birdImageUrl: state.clickables.birdImageUrl,
-    imageLoading: state.clickables.loading
+    imageLoading: state.clickables.loading,
+    birdName: state.clickables.birdName
   };
 };
 

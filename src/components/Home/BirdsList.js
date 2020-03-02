@@ -22,7 +22,6 @@ const styles = {
       borderRadius: '5px'
     }
   },
-
   formGroupBirds: {
     marginTop: '15px'
   }

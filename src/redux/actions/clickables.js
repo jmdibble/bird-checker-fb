@@ -7,14 +7,13 @@ import {
 export function infoClicked(firebase, birdName) {
   return dispatch => {
     dispatch(infoClickedBegin());
-    let imageUrl = '';
     firebase
       .storageRef()
       .child(`/birds/${birdName}.jpg`)
       .getDownloadURL()
       .then(url => {
-        console.log(url);
-        dispatch(infoClickedSuccess(url));
+        console.log(url, birdName);
+        dispatch(infoClickedSuccess(url, birdName));
       });
   };
   // TODO: handle error?
@@ -24,26 +23,12 @@ export const infoClickedBegin = () => ({
   type: INFO_CLICKED_BEGIN
 });
 
-export const infoClickedSuccess = imageUrl => ({
+export const infoClickedSuccess = (imageUrl, birdName) => ({
   type: INFO_CLICKED_SUCCESS,
-  payload: { imageUrl }
+  payload: { imageUrl, birdName }
 });
 
 export const infoClickedFailure = error => ({
   type: INFO_CLICKED_FAIL,
   payload: { error }
 });
-
-//   infoHandler = birdName => {
-//     this.setState({ imageLoading: true });
-//     this.props.firebase
-//       .storageRef()
-//       .child(`/birds/${birdName}.jpg`)
-//       .getDownloadURL()
-//       .then(url => {
-//         this.setState({ birdImageUrl: url });
-//         this.setState({ dialogTitle: birdName });
-//         this.setState({ open: true });
-//         this.setState({ imageLoading: false });
-//       });
-//   };
