@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
+// Redux
 import { connect } from 'react-redux';
-import { getBirds, searchFilter, infoClicked } from '../../redux/index';
+import {
+  getBirds,
+  searchFilter,
+  infoClicked,
+  getUsers
+} from '../../redux/index';
 // Components
 import BirdsList from './BirdsList';
 import SearchBar from './SearchBar';
@@ -28,11 +34,13 @@ const styles = {
 
 class HomePage extends Component {
   state = {
-    dialogOpen: false
+    dialogOpen: false,
+    filterClicked: false
   };
 
   componentDidMount = () => {
     this.props.getBirds(this.props.firebase);
+    this.props.getUsers(this.props.firebase, this.props.authUser);
   };
 
   handleSearch = e => {
@@ -52,6 +60,11 @@ class HomePage extends Component {
     this.setState({ dialogOpen: false });
   };
 
+  handleFilter = () => {
+    this.setState({ filterClicked: !this.state.filterClicked });
+    console.log(this.state.filterClicked);
+  };
+
   render() {
     const {
       classes,
@@ -60,14 +73,16 @@ class HomePage extends Component {
       infoClicked,
       firebase,
       birdImageUrl,
-      birdName
+      birdName,
+      imageLoading
     } = this.props;
+    const { dialogOpen, filterClicked } = this.state;
     return (
       <Card className={classes.card}>
         <CardContent>
           <Grid container spacing={1} className={classes.titleGrid}>
             <SearchBar onChange={this.handleSearch} />
-            <Filter />
+            <Filter onClick={this.handleFilter} filterClicked={filterClicked} />
           </Grid>
           <BirdsList
             allBirds={filteredList.length > 0 ? filteredList : birds.birds}
@@ -77,9 +92,9 @@ class HomePage extends Component {
           <InfoDialog
             birdImageUrl={birdImageUrl}
             birdName={birdName}
-            dialogOpen={this.state.dialogOpen}
+            dialogOpen={dialogOpen}
             dialogClose={this.closeDialog}
-            imageLoading={this.props.imageLoading}
+            imageLoading={imageLoading}
           />
         </CardContent>
       </Card>
@@ -109,7 +124,8 @@ const mapDispatchToProps = dispatch => {
     getBirds: firebase => dispatch(getBirds(firebase)),
     searchFilter: (value, list) => dispatch(searchFilter(value, list)),
     infoClicked: (firebase, birdName) =>
-      dispatch(infoClicked(firebase, birdName))
+      dispatch(infoClicked(firebase, birdName)),
+    getUsers: (firebase, authUser) => dispatch(getUsers(firebase, authUser))
   };
 };
 

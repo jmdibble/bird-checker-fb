@@ -32,6 +32,7 @@ function BirdsList({ classes, allBirds, handleInfo }) {
     <FormGroup className={classes.formGroupBirds}>
       {!!allBirds &&
         allBirds.map(bird => {
+          let isChecked = false;
           return (
             <Box display='flex' className={classes.itemsBox} key={bird.name}>
               <Box flexGrow={1}>
@@ -40,7 +41,7 @@ function BirdsList({ classes, allBirds, handleInfo }) {
                     <Checkbox
                       id='checkbox'
                       // ref='checkbox'
-                      checked={false}
+                      checked={isChecked}
                       // onClick={() => this.checkboxHandler(isChecked, bird.uid)}
                       value={bird.name}
                     />

@@ -30,11 +30,13 @@ import { compose } from 'recompose';
 import birdsReducer from '../../redux/reducers/birds';
 import filtersReducer from '../../redux/reducers/filters';
 import clickablesReducer from '../../redux/reducers/clickables';
+import usersReducer from '../../redux/reducers/users';
 
 const rootReducer = combineReducers({
   birds: birdsReducer,
   filters: filtersReducer,
-  clickables: clickablesReducer
+  clickables: clickablesReducer,
+  users: usersReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
