@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // MUI stuff
@@ -27,12 +27,21 @@ const styles = {
   }
 };
 
-function BirdsList({ classes, allBirds, handleInfo }) {
+function BirdsList({ classes, allBirds, handleInfo, seenBirds }) {
+  console.log(allBirds);
+  console.log(seenBirds);
+  let seenBirdsNames = [];
+  !!seenBirds &&
+    seenBirds.forEach(function(bird) {
+      seenBirdsNames.push(bird.name);
+    });
+
   return (
     <FormGroup className={classes.formGroupBirds}>
       {!!allBirds &&
+        !!seenBirds &&
         allBirds.map(bird => {
-          let isChecked = false;
+          let isChecked = !!seenBirdsNames.includes(bird.name);
           return (
             <Box display='flex' className={classes.itemsBox} key={bird.name}>
               <Box flexGrow={1}>

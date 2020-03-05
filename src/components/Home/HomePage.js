@@ -35,7 +35,8 @@ const styles = {
 class HomePage extends Component {
   state = {
     dialogOpen: false,
-    filterClicked: false
+    filterClicked: false,
+    seenBirdsName: []
   };
 
   componentDidMount = () => {
@@ -69,6 +70,7 @@ class HomePage extends Component {
     const {
       classes,
       birds,
+      seenBirds,
       filteredList,
       infoClicked,
       firebase,
@@ -88,6 +90,7 @@ class HomePage extends Component {
             allBirds={filteredList.length > 0 ? filteredList : birds.birds}
             infoClicked={() => infoClicked(firebase)}
             handleInfo={this.handleInfo}
+            seenBirds={seenBirds.users}
           />
           <InfoDialog
             birdImageUrl={birdImageUrl}
@@ -110,6 +113,7 @@ HomePage.propTypes = {
 const mapStateToProps = state => {
   return {
     birds: state.birds.birds,
+    seenBirds: state.users.seenBirds,
     loading: state.birds.loading,
     error: state.birds.error,
     filteredList: state.filters.filteredList,

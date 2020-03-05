@@ -13,6 +13,7 @@ export function getUsers(firebase, authUser) {
     firebase.user(authUser.uid).onSnapshot(snapshot => {
       seenBirds = snapshot.data().birds;
       console.log(seenBirds);
+      dispatch(getUsersSuccess(seenBirds));
     });
 
     // TODO: handle error?

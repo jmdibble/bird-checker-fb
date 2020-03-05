@@ -22,8 +22,7 @@ export default function birds(state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
-        user: action.payload.user,
-        seenBirds: action.payload.seenBirds
+        seenBirds: action.payload
       };
     case GET_USERS_FAIL:
       return {
