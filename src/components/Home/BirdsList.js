@@ -27,7 +27,13 @@ const styles = {
   }
 };
 
-function BirdsList({ classes, allBirds, handleInfo, seenBirds }) {
+function BirdsList({
+  classes,
+  allBirds,
+  handleInfo,
+  seenBirds,
+  handleCheckbox
+}) {
   console.log(allBirds);
   console.log(seenBirds);
   let seenBirdsNames = [];
@@ -51,7 +57,7 @@ function BirdsList({ classes, allBirds, handleInfo, seenBirds }) {
                       id='checkbox'
                       // ref='checkbox'
                       checked={isChecked}
-                      // onClick={() => this.checkboxHandler(isChecked, bird.uid)}
+                      onClick={() => handleCheckbox(isChecked, bird.name)}
                       value={bird.name}
                     />
                   }

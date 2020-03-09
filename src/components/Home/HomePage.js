@@ -66,11 +66,58 @@ class HomePage extends Component {
     console.log(this.state.filterClicked);
   };
 
+  handleCheckbox = (isChecked, birdName) => {
+    console.log(this.props.seenBirds.users);
+    console.log(this.props.birds.birds);
+    if (isChecked === true) {
+      console.log('True');
+      // Get list of seenBirds, remove clicked bird, push new list back to db
+      const newSeenBirds = this.props.seenBirds.users.filter(
+        bird => bird.name !== birdName
+      );
+      console.log(newSeenBirds);
+    } else {
+      console.log('False');
+      console.log(birdName);
+      // Get list of seenBirds, add clicked bird, push new list to db
+      console.log(this.props.seenBirds.users);
+      const newSeenBirds = this.props.seenBirds.users;
+      this.props.seenBirds.users.concat(
+        this.props.birds.birds.filter(bird => {
+          return bird.name === birdName;
+        })
+      );
+      console.log(newSeenBirds);
+    }
+
+    // if (isChecked === true) {
+    //   const newBirdArray = this.state.seenBirdsUid.filter(bird => {
+    //     return bird.uid !== uid;
+    //   });
+    //   console.log(newBirdArray);
+    //   this.unsubscribe = this.props.firebase
+    //     .user(this.props.authUser.uid)
+    //     .update({ birds: newBirdArray });
+    //   this.setState({ seenBirdsUid: newBirdArray });
+    // } else {
+    //   const newBirdArray = this.state.seenBirdsUid.concat(
+    //     this.state.allBirds.filter(bird => {
+    //       return bird.uid === uid;
+    //     })
+    //   );
+    //   this.unsubscribe = this.props.firebase
+    //     .user(this.props.authUser.uid)
+    //     .update({ birds: newBirdArray });
+    //   this.setState({ seenBirdsUid: newBirdArray });
+    // }
+  };
+
   render() {
     const {
       classes,
       birds,
       seenBirds,
+      allBirds,
       filteredList,
       infoClicked,
       firebase,
@@ -91,6 +138,7 @@ class HomePage extends Component {
             infoClicked={() => infoClicked(firebase)}
             handleInfo={this.handleInfo}
             seenBirds={seenBirds.users}
+            handleCheckbox={this.handleCheckbox}
           />
           <InfoDialog
             birdImageUrl={birdImageUrl}
