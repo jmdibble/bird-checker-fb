@@ -10,10 +10,11 @@ export function getBirds(firebase) {
     let allBirds = [];
     firebase.birds().onSnapshot(snapshot => {
       snapshot.forEach(doc => {
-        console.log(doc.data());
-        allBirds.push(doc.data());
+        console.log(doc.id, doc.data());
+        allBirds.push({ name: doc.data().name, uid: doc.id });
       });
       allBirds.sort((a, b) => a.name.localeCompare(b.name));
+      console.log(allBirds);
       dispatch(getBirdsSuccess(allBirds));
     });
     // TODO: handle error?

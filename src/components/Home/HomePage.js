@@ -66,27 +66,23 @@ class HomePage extends Component {
     console.log(this.state.filterClicked);
   };
 
-  handleCheckbox = (isChecked, birdName) => {
+  handleCheckbox = (isChecked, birdObject) => {
     console.log(this.props.seenBirds.users);
     console.log(this.props.birds.birds);
     if (isChecked === true) {
       console.log('True');
       // Get list of seenBirds, remove clicked bird, push new list back to db
       const newSeenBirds = this.props.seenBirds.users.filter(
-        bird => bird.name !== birdName
+        bird => bird.name !== birdObject.name
       );
       console.log(newSeenBirds);
     } else {
       console.log('False');
-      console.log(birdName);
+      console.log(birdObject.name);
       // Get list of seenBirds, add clicked bird, push new list to db
       console.log(this.props.seenBirds.users);
       const newSeenBirds = this.props.seenBirds.users;
-      this.props.seenBirds.users.concat(
-        this.props.birds.birds.filter(bird => {
-          return bird.name === birdName;
-        })
-      );
+      newSeenBirds.push(birdObject);
       console.log(newSeenBirds);
     }
 

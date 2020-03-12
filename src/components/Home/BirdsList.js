@@ -57,7 +57,7 @@ function BirdsList({
                       id='checkbox'
                       // ref='checkbox'
                       checked={isChecked}
-                      onClick={() => handleCheckbox(isChecked, bird.name)}
+                      onClick={() => handleCheckbox(isChecked, bird)}
                       value={bird.name}
                     />
                   }
