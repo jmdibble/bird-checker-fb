@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
-import Logo from '../../images/birdbook logo2.png';
+import Logo from '../../images/birdbook logo.png';
 
 // MUI stuff
 import { withStyles } from '@material-ui/core/styles';
@@ -67,7 +67,7 @@ function Navigation({ authUser, classes, firebase }) {
               authUser ? (
                 <Fragment>
                   <Button color='inherit' component={Link} to={ROUTES.HOME}>
-                    Birds
+                    My Birds
                   </Button>
                   <Menu
                     id='simple-menu'
@@ -83,9 +83,7 @@ function Navigation({ authUser, classes, firebase }) {
                     >
                       Account
                     </MenuItem>
-                    <MenuItem onClick={(firebase.doSignOut, handleClose)}>
-                      Logout
-                    </MenuItem>
+                    <MenuItem onClick={firebase.doSignOut}>Logout</MenuItem>
                   </Menu>
 
                   <IconButton color='inherit' onClick={handleClick}>

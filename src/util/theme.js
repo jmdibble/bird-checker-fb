@@ -1,4 +1,7 @@
 export default {
+  typography: {
+    fontFamily: 'Montserrat, sans-serif'
+  },
   palette: {
     common: { black: '#000', white: '#fff' },
     background: { paper: '#fff', default: '#fafafa' },
@@ -25,9 +28,6 @@ export default {
       secondary: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)'
-    },
-    typography: {
-      useNextVariants: true
     }
   }
 };

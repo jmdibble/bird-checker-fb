@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
+
 // Redux
 import { connect } from 'react-redux';
 import {
@@ -9,14 +10,19 @@ import {
   infoClicked,
   getUsers
 } from '../../redux/index';
+
 // Components
 import BirdsList from './BirdsList';
 import SearchBar from './SearchBar';
 import InfoDialog from './InfoDialog';
 import Filter from './Filter';
+import ExpansionPanels from './ExpansionPanels';
+
 // MUI
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Grid } from '@material-ui/core';
+import { Typography, Card, CardContent, Grid } from '@material-ui/core';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = {
   card: {
@@ -125,13 +131,20 @@ class HomePage extends Component {
               filterClicked={filterClicked}
             />
           </Grid>
-          <BirdsList
+          <ExpansionPanels
             allBirds={filteredList.length > 0 ? filteredList : birds.birds}
             infoClicked={() => infoClicked(firebase)}
             handleInfo={this.handleInfo}
             seenBirds={seenBirds.users}
             handleCheckbox={this.handleCheckbox}
           />
+          {/* <BirdsList
+            allBirds={filteredList.length > 0 ? filteredList : birds.birds}
+            infoClicked={() => infoClicked(firebase)}
+            handleInfo={this.handleInfo}
+            seenBirds={seenBirds.users}
+            handleCheckbox={this.handleCheckbox}
+          /> */}
           <InfoDialog
             birdImageUrl={birdImageUrl}
             birdName={birdName}

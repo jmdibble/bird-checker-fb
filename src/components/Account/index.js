@@ -6,7 +6,7 @@ import ReportBug from '../ReportBug';
 import AccountInfo from './accountInfo';
 
 // MUI
-import { Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 const AccountPage = () => (
   <AuthUserContext.Consumer>

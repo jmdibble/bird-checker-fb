@@ -18,7 +18,7 @@ const styles = {
   card: {
     padding: '10px',
     margin: '50px auto 50px auto',
-    maxWidth: '400px',
+    maxWidth: '500px',
     textAlign: 'center'
   },
   textField: {

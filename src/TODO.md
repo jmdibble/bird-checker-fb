@@ -4,7 +4,7 @@
 
 // - Page shifts/wobbles upon filter icon hover when filtered (this might be fixed now)
 
-- Error on checking/unchecking first bird - this issue is in componentDidUpdate not firing
+// - Error on checking/unchecking first bird - this issue is in componentDidUpdate not firing
 
 ## Short term
 
@@ -19,27 +19,22 @@
 // - Add email to suggestion form
 // - Fix homepage lag
 // - Show user in account/profile and username in hover
+// - Redesign signup forms
 
 - Refactor home into smaller components
 - Implement redux
 - Add "collapsed" alphabetical view of birds which can expand/collapse to avoid a long page
 - Add some explanation on landing page
-- Save progress type indicator
 
 ## Longer term
 
 // - Privacy policy
 // - Terms and conditions
 
-- Bird hover preview
-- Add geotag
-- Screenshots for features
-
 ## Before launch
 
 // - Properly design logo
 
-- Redesign signup forms
 - Add the rest of the birds to DB
 - UI audit - some UI is not uniform
 - Clean up console.log and any console errors
@@ -53,9 +48,13 @@
 
 ## Possible additions (decide if these are MVP or not)
 
+- Save progress type indicator
 - Add latin name for birds next to main name
 - Add "location" map on bird info dialog
 - Search users and view their seen birds
 - Add profile picture for users
 - Add friend search functionality
 - Esc out of bird preview
+- Bird hover preview
+- Add geotag
+- Screenshots for features

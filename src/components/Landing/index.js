@@ -79,7 +79,7 @@ const styles = {
   }
 };
 
-const Landing = ({ authUser, classes }) => (
+const Landing = ({ classes }) => (
   <Fragment>
     <div className={classes.heroImage}>
       <div className={classes.heroText}>
@@ -123,14 +123,13 @@ const Landing = ({ authUser, classes }) => (
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
       This began as a project to keep track of all the birds I've seen as I
-      couldn't find a suitable digital solution. I soon realised others would
+      couldn't find a suitable digital solution. I soon realised others might
       benefit from it so I added the ability to create users and made it public.
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
-      The aim is to build this out into a comprehensive UK bird reference guide
-      and increase the social aspect and eventually create a central community
-      for birdwatchers. I will create a feedback section at some point to find
-      out the most requested features.
+      The vision is to build this out into a comprehensive UK bird reference
+      guide, increase the social aspect and eventually create a central
+      community for birdwatchers to compare the birds they've seen.
     </Typography>
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
@@ -193,9 +192,9 @@ const Landing = ({ authUser, classes }) => (
       The birds
     </Typography>
     <Typography variant='body1' className={classes.bodyText}>
-      The full list of birds is taken from the British Ornothologists' Union,
-      categories A - C, more commonly known as the British List. You can read
-      more about it here{' '}
+      The full list of ~600 birds is taken from the British Ornothologists'
+      Union, categories A - C, more commonly known as the British List. You can
+      read more about it here{' '}
       <a href='https://www.bou.org.uk/british-list/' target='_blank'>
         https://www.bou.org.uk/british-list/
       </a>
@@ -212,6 +211,10 @@ const Landing = ({ authUser, classes }) => (
       appreciate anyone contributing to the code and/or making donations. If
       you'd like to dontate to help keep this service running as long as
       possible, please do so below.
+    </Typography>
+    <Typography variant='body1' className={classes.bodyText}>
+      Under the account section you can send feature suggestions and I'll aim to
+      build the most requested features.
     </Typography>
     <div className={classes.buttonWrapper}>
       <Button
