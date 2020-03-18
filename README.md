@@ -1,8 +1,14 @@
-# Firebase Auth Template
+# Birdbook
 
-### Don't forget to make your own firebase.js file with your own Firebase config before running.
+## About
 
-A reusable template with a super basic Firebase authentication set up in React. 
+This began as a project to keep track of all the birds I've seen as I couldn't find a suitable digital solution. I soon realised others might benefit from it so I added the ability to create users and made it public.
+
+The vision is to build this out into a comprehensive UK bird reference guide, increase the social aspect and eventually create a central community for birdwatchers to compare the birds they've seen.
+
+This project is, and will remain open source and free. I want to build it out to have all the features necessary and encourage the community.
+
+### If cloning, don't forget to make your own firebase.js file with your own Firebase config before running.
 
 ## Available commands
 
