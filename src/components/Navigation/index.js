@@ -64,7 +64,7 @@ const Navigation = ({ authUser, classes, firebase }) => (
                   component={Link}
                   to={ROUTES.ACCOUNT}
                 >
-                  <Tooltip title='Account'>
+                  <Tooltip title={authUser.email}>
                     <AccountCircle />
                   </Tooltip>
                 </IconButton>

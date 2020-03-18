@@ -18,6 +18,7 @@
 // - Fix suggestion form
 // - Add email to suggestion form
 // - Fix homepage lag
+// - Show user in account/profile and username in hover
 
 - Refactor home into smaller components
 - Implement redux
@@ -41,6 +42,7 @@
 - Add the rest of the birds to DB
 - UI audit - some UI is not uniform
 - Clean up console.log and any console errors
+- Complete PropTypes
 
 ## To launch
 

@@ -85,11 +85,8 @@ class ReportBug extends Component {
       <Fragment>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
-            <Typography variant='h4' className={classes.typographyHeader}>
-              Got a suggestion?
-            </Typography>
             <Typography variant='h6' className={classes.sectionHeader}>
-              Let us know!
+              Got a suggestion? Let us know!
             </Typography>
             <form onSubmit={this.onSubmit}>
               <Grid>

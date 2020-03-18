@@ -95,9 +95,6 @@ class PasswordChangeForm extends Component {
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
             <Grid>
-              <Typography variant='h4' className={classes.typographyHeader}>
-                Account admin
-              </Typography>
               {/* <Typography variant='body1' className={classes.sectionHeader}>
                 <strong>Username:</strong> {username + ' '}
                 <strong>Email:</strong> {email}

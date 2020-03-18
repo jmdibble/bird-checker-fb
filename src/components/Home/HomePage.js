@@ -36,7 +36,7 @@ class HomePage extends Component {
   state = {
     dialogOpen: false,
     filterClicked: false,
-    seenBirdsName: []
+    filterArray: []
   };
 
   componentDidMount = () => {
@@ -61,51 +61,39 @@ class HomePage extends Component {
     this.setState({ dialogOpen: false });
   };
 
-  handleFilter = () => {
-    this.setState({ filterClicked: !this.state.filterClicked });
+  handleReleaseFilter = () => {
+    this.setState({ filterClicked: false, filterArray: [] });
     console.log(this.state.filterClicked);
   };
 
+  handleSeenFilter = () => {
+    this.setState({ filterClicked: true });
+    const seenBirds = this.props.seenBirds.users;
+    this.setState({ filterArray: seenBirds });
+  };
+
+  handleUnseenFilter = () => {
+    this.setState({ filterClicked: !this.state.filterClicked });
+    console.log('unseen', this.state.filterClicked);
+  };
+
   handleCheckbox = (isChecked, birdObject) => {
-    console.log(this.props.seenBirds.users);
-    console.log(this.props.birds.birds);
     if (isChecked === true) {
-      console.log('True');
       // Get list of seenBirds, remove clicked bird, push new list back to db
       const newSeenBirds = this.props.seenBirds.users.filter(
         bird => bird.name !== birdObject.name
       );
-      console.log(newSeenBirds);
+      this.unsubscribe = this.props.firebase
+        .user(this.props.authUser.uid)
+        .update({ birds: newSeenBirds });
     } else {
-      console.log('False');
-      console.log(birdObject.name);
       // Get list of seenBirds, add clicked bird, push new list to db
-      console.log(this.props.seenBirds.users);
       const newSeenBirds = this.props.seenBirds.users;
       newSeenBirds.push(birdObject);
-      console.log(newSeenBirds);
+      this.unsubscribe = this.props.firebase
+        .user(this.props.authUser.uid)
+        .update({ birds: newSeenBirds });
     }
-
-    // if (isChecked === true) {
-    //   const newBirdArray = this.state.seenBirdsUid.filter(bird => {
-    //     return bird.uid !== uid;
-    //   });
-    //   console.log(newBirdArray);
-    //   this.unsubscribe = this.props.firebase
-    //     .user(this.props.authUser.uid)
-    //     .update({ birds: newBirdArray });
-    //   this.setState({ seenBirdsUid: newBirdArray });
-    // } else {
-    //   const newBirdArray = this.state.seenBirdsUid.concat(
-    //     this.state.allBirds.filter(bird => {
-    //       return bird.uid === uid;
-    //     })
-    //   );
-    //   this.unsubscribe = this.props.firebase
-    //     .user(this.props.authUser.uid)
-    //     .update({ birds: newBirdArray });
-    //   this.setState({ seenBirdsUid: newBirdArray });
-    // }
   };
 
   render() {
@@ -113,7 +101,6 @@ class HomePage extends Component {
       classes,
       birds,
       seenBirds,
-      allBirds,
       filteredList,
       infoClicked,
       firebase,
@@ -122,12 +109,21 @@ class HomePage extends Component {
       imageLoading
     } = this.props;
     const { dialogOpen, filterClicked } = this.state;
+    console.log('seen', this.state.filterClicked);
+    console.log(this.props.seenBirds.users);
+    console.log(this.props.birds.birds);
+    console.log(this.state.filterArray);
     return (
       <Card className={classes.card}>
         <CardContent>
           <Grid container spacing={1} className={classes.titleGrid}>
             <SearchBar onChange={this.handleSearch} />
-            <Filter onClick={this.handleFilter} filterClicked={filterClicked} />
+            <Filter
+              seenFilter={this.handleSeenFilter}
+              unseenFilter={this.handleUnseenFilter}
+              releaseFilter={this.handleReleaseFilter}
+              filterClicked={filterClicked}
+            />
           </Grid>
           <BirdsList
             allBirds={filteredList.length > 0 ? filteredList : birds.birds}

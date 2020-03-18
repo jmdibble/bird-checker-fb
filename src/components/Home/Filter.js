@@ -12,13 +12,19 @@ const styles = {
   }
 };
 
-function Filter({ classes, filterClicked, onClick }) {
+function Filter({
+  classes,
+  filterClicked,
+  unseenFilter,
+  seenFilter,
+  releaseFilter
+}) {
   return (
     <div>
       <Grid item xs={3} className={classes.filterIcon}>
         {filterClicked ? (
           <Tooltip title='Unfilter seen birds'>
-            <IconButton onClick={console.log('filter seen birds')}>
+            <IconButton onClick={() => releaseFilter()}>
               <FilterListIcon color='primary' />
             </IconButton>
           </Tooltip>
@@ -35,16 +41,16 @@ function Filter({ classes, filterClicked, onClick }) {
                 <Menu {...bindMenu(popupState)}>
                   <MenuItem
                     onClick={() => {
-                      console.log('filter seen birds');
                       popupState.close();
+                      seenFilter();
                     }}
                   >
                     Seen birds
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      console.log('filter unseen birds');
                       popupState.close();
+                      unseenFilter();
                     }}
                   >
                     Unseen birds
