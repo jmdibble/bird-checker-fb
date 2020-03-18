@@ -39,6 +39,7 @@
 
 // - Properly design logo
 
+- Redesign signup forms
 - Add the rest of the birds to DB
 - UI audit - some UI is not uniform
 - Clean up console.log and any console errors
